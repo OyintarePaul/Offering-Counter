@@ -1,27 +1,25 @@
-import { Button, Text, View } from "react-native";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { db } from "@/db/client";
-import { services } from "@/db/schema";
+import { View } from "react-native";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Text } from "@/components/ui/text";
 
 export default function Index() {
-  const { data } = useLiveQuery(db.select().from(services));
-
   return (
-    <View className="flex-1 items-center justify-center gap-4 bg-background">
-      <Text className="text-foreground text-lg">Services saved: {data.length}</Text>
-      <Button
-        title="Add test service"
-        onPress={() => {
-          db.insert(services)
-            .values({
-              serviceDate: "2026-11-15",
-              label: "Main Service",
-              createdAt: new Date(),
-            })
-            .onConflictDoNothing()
-            .run();
-        }}
-      />
+    <View className="flex-1 justify-center bg-background p-6 gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Theme check</CardTitle>
+        </CardHeader>
+        <CardContent className="gap-3">
+          <Label>Tithe count</Label>
+          <Input placeholder="0" keyboardType="number-pad" />
+          <Button className="bg-primary">
+            <Text>Save</Text>
+          </Button>
+        </CardContent>
+      </Card>
     </View>
   );
 }

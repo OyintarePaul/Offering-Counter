@@ -2,6 +2,7 @@ import "@/global.css";
 import { Stack } from "expo-router";
 import { ActivityIndicator, Text, View } from "react-native";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
+import { PortalHost } from "@rn-primitives/portal";
 import migrations from "@/drizzle/migrations";
 import { db } from "@/db/client";
 
@@ -24,5 +25,10 @@ export default function RootLayout() {
     );
   }
 
-  return <Stack />;
+  return (
+    <>
+      <Stack />
+      <PortalHost />
+    </>
+  );
 }
