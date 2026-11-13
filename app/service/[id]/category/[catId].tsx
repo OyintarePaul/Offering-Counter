@@ -8,6 +8,16 @@ import { CountRow } from "@/components/count-row";
 import { AddDenominationDialog } from "@/components/add-denomination-dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 
 export default function CategoryScreen() {
   const { id, catId } = useLocalSearchParams<{ id: string; catId: string }>();
@@ -20,6 +30,7 @@ export default function CategoryScreen() {
 
   const [addOpen, setAddOpen] = useState(false);
   const [focusDenom, setFocusDenom] = useState<number | null>(null);
+  const [pendingRemove, setPendingRemove] = useState<number | null>(null);
   const inputRefs = useRef<Record<number, TextInput | null>>({});
   const scrollRef = useRef<ScrollView>(null);
   const rowY = useRef<Record<number, number>>({});
@@ -51,6 +62,12 @@ export default function CategoryScreen() {
     } else {
       Keyboard.dismiss();
     }
+  }
+
+  async function confirmRemove() {
+    if (pendingRemove === null) return;
+    await removeDenomination(categoryId, pendingRemove);
+    setPendingRemove(null);
   }
 
   if (!ready) {
@@ -102,7 +119,11 @@ export default function CategoryScreen() {
             onNext={() => focusNext(index)}
             isLast={index === rows.length - 1}
             onRemove={() => {
-              void removeDenomination(categoryId, row.denomination);
+              if (row.count > 0) {
+                setPendingRemove(row.denomination);
+              } else {
+                void removeDenomination(categoryId, row.denomination);
+              }
             }}
             onLayoutY={(y) => {
               rowY.current[row.denomination] = y;
@@ -126,6 +147,32 @@ export default function CategoryScreen() {
           onClose={() => setAddOpen(false)}
         />
       )}
+
+      <AlertDialog
+        open={pendingRemove !== null}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) setPendingRemove(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Remove {pendingRemove !== null ? formatNaira(pendingRemove) : ""}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Its count will be cleared. This can't be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              <Text>Cancel</Text>
+            </AlertDialogCancel>
+            <AlertDialogAction onPress={confirmRemove}>
+              <Text>Remove</Text>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </View>
   );
 }

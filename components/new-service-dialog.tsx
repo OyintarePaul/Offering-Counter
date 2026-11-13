@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SERVICE_LABELS } from "@/lib/presets";
 import { upcomingSunday, formatServiceDate, toIsoDate, parseIsoDate } from "@/lib/dates";
 import { findOrCreateService } from "@/db/services";
+import { router } from "expo-router";
 
 type Props = { onClose: () => void };
 
@@ -28,9 +29,10 @@ export function NewServiceDialog({ onClose }: Props) {
 
   async function handleCreate() {
     setSaving(true);
-    await findOrCreateService(serviceDate, label);
+    const id = await findOrCreateService(serviceDate, label);
     setSaving(false);
     onClose();
+    router.push({ pathname: "/service/[id]", params: { id: String(id)} })
   }
 
   return (
