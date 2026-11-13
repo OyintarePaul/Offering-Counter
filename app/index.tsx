@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { desc, eq } from "drizzle-orm";
+import { Pressable, ScrollView, View } from "react-native";
+import { router } from "expo-router";
+import { eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { services } from "@/db/schema";
+import { useServiceTree } from "@/db/live";
 import { formatNaira, grandTotal } from "@/lib/money";
 import { formatServiceDate } from "@/lib/dates";
 import { NewServiceDialog } from "@/components/new-service-dialog";
@@ -22,12 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function ServicesScreen() {
-  const { data } = useLiveQuery(
-    db.query.services.findMany({
-      orderBy: [desc(services.serviceDate), desc(services.createdAt)],
-      with: { categories: { with: { entries: true } } },
-    })
-  );
+  const { services: list, ready } = useServiceTree();
 
   const [newOpen, setNewOpen] = useState(false);
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
@@ -41,30 +37,36 @@ export default function ServicesScreen() {
   return (
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
-        {data.length === 0 && (
+        {ready && list.length === 0 && (
           <Text className="mt-10 text-center text-muted-foreground">
             No services yet. Tap New Service to start.
           </Text>
         )}
 
-        {data.map((s) => (
-          <Card key={s.id}>
-            <CardHeader>
-              <CardTitle>{formatServiceDate(s.serviceDate)}</CardTitle>
-              <Text className="text-muted-foreground">
-                {s.label} · {s.categories.length} categories
-              </Text>
-            </CardHeader>
-            <CardContent className="flex-row items-center justify-between">
-              <Text className="text-lg font-semibold text-accent">
-                {formatNaira(grandTotal(s.categories))}
-              </Text>
-              <Button variant="destructive" size="sm" onPress={() => setPendingDeleteId(s.id)}>
-                <Text>Delete</Text>
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
+        {ready &&
+          list.map((s) => (
+            <Pressable
+              key={s.id}
+              onPress={() => router.push({ pathname: "/service/[id]", params: { id: String(s.id) } })}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>{formatServiceDate(s.serviceDate)}</CardTitle>
+                  <Text className="text-muted-foreground">
+                    {s.label} · {s.categories.length} categories
+                  </Text>
+                </CardHeader>
+                <CardContent className="flex-row items-center justify-between">
+                  <Text className="text-lg font-semibold text-accent">
+                    {formatNaira(grandTotal(s.categories))}
+                  </Text>
+                  <Button variant="destructive" size="sm" onPress={() => setPendingDeleteId(s.id)}>
+                    <Text>Delete</Text>
+                  </Button>
+                </CardContent>
+              </Card>
+            </Pressable>
+          ))}
       </ScrollView>
 
       <View className="p-4">

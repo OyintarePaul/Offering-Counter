@@ -1,0 +1,131 @@
+import { useEffect, useRef, useState } from "react";
+import { Keyboard, ScrollView, TextInput, View } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { useServiceTree } from "@/db/live";
+import { saveCount, removeDenomination } from "@/db/entries";
+import { categoryTotal, formatNaira } from "@/lib/money";
+import { CountRow } from "@/components/count-row";
+import { AddDenominationDialog } from "@/components/add-denomination-dialog";
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
+
+export default function CategoryScreen() {
+  const { id, catId } = useLocalSearchParams<{ id: string; catId: string }>();
+  const serviceId = Number(id);
+  const categoryId = Number(catId);
+
+  const { services: list, ready } = useServiceTree();
+  const service = list.find((s) => s.id === serviceId);
+  const category = service?.categories.find((c) => c.id === categoryId);
+
+  const [addOpen, setAddOpen] = useState(false);
+  const [focusDenom, setFocusDenom] = useState<number | null>(null);
+  const inputRefs = useRef<Record<number, TextInput | null>>({});
+  const scrollRef = useRef<ScrollView>(null);
+  const rowY = useRef<Record<number, number>>({});
+
+  // Largest denominations first.
+  const rows = category
+    ? [...category.entries].sort((a, b) => b.denomination - a.denomination)
+    : [];
+
+  // After adding a denomination, move the cursor to its new input.
+  useEffect(() => {
+    if (focusDenom !== null && inputRefs.current[focusDenom]) {
+      inputRefs.current[focusDenom]?.focus();
+      setFocusDenom(null);
+    }
+  }, [focusDenom, rows]);
+
+  // Scroll the focused row to the top of the visible area, above the keyboard.
+  function scrollToRow(denomination: number) {
+    const y = rowY.current[denomination];
+    if (y === undefined) return;
+    scrollRef.current?.scrollTo({ y: Math.max(0, y - 16), animated: true });
+  }
+
+  function focusNext(index: number) {
+    const next = rows[index + 1];
+    if (next) {
+      inputRefs.current[next.denomination]?.focus();
+    } else {
+      Keyboard.dismiss();
+    }
+  }
+
+  if (!ready) {
+    return <View className="flex-1 bg-background" />;
+  }
+
+  if (!service || !category) {
+    return (
+      <View className="flex-1 items-center justify-center bg-background">
+        <Text className="text-muted-foreground">Category not found.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View className="flex-1 bg-background">
+      <Stack.Screen options={{ title: category.name }} />
+
+      <View className="border-b border-border bg-card p-4">
+        <Text className="text-muted-foreground">{category.name} total</Text>
+        <Text className="text-3xl font-bold text-accent">
+          {formatNaira(categoryTotal(category.entries))}
+        </Text>
+      </View>
+
+      <ScrollView
+        ref={scrollRef}
+        className="flex-1"
+        contentContainerClassName="gap-3 p-4 pb-80"
+        keyboardShouldPersistTaps="handled"
+      >
+        {rows.length === 0 && (
+          <Text className="mt-10 text-center text-muted-foreground">
+            Add a denomination to start counting.
+          </Text>
+        )}
+
+        {rows.map((row, index) => (
+          <CountRow
+            key={row.denomination}
+            denomination={row.denomination}
+            count={row.count}
+            inputRef={(el) => {
+              inputRefs.current[row.denomination] = el;
+            }}
+            onChangeCount={(n) => {
+              void saveCount(categoryId, row.denomination, n);
+            }}
+            onNext={() => focusNext(index)}
+            isLast={index === rows.length - 1}
+            onRemove={() => {
+              void removeDenomination(categoryId, row.denomination);
+            }}
+            onLayoutY={(y) => {
+              rowY.current[row.denomination] = y;
+            }}
+            onFocusRow={() => scrollToRow(row.denomination)}
+          />
+        ))}
+      </ScrollView>
+
+      <View className="p-4">
+        <Button variant="outline" onPress={() => setAddOpen(true)}>
+          <Text>Add Denomination</Text>
+        </Button>
+      </View>
+
+      {addOpen && (
+        <AddDenominationDialog
+          categoryId={categoryId}
+          existing={rows.map((r) => r.denomination)}
+          onAdded={(d) => setFocusDenom(d)}
+          onClose={() => setAddOpen(false)}
+        />
+      )}
+    </View>
+  );
+}
