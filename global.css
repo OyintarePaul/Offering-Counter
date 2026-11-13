@@ -3,28 +3,72 @@
 
 @layer theme {
   :root {
-        @variant light {
-            --color-background: #f5f5f4;
-            --color-card: #ffffff;
-            --color-foreground: #1c1917;
-            --color-muted: #78716c;
-            --color-border: #e7e5e4;
-            --color-primary: #1c1917;
-            --color-primary-foreground: #ffffff;
-            --color-accent: #b45309;
-            --color-destructive: #dc2626;
-        }
+    @variant light {
+      /* Surfaces */
+      --color-background: #F8FAFC;
+      --color-foreground: #0F172A;
+      --color-card: #FFFFFF;
+      --color-card-foreground: #0F172A;
+      --color-popover: #FFFFFF;
+      --color-popover-foreground: #0F172A;
 
-        @variant dark {
-            --color-background: #f5f5f4;
-            --color-card: #ffffff;
-            --color-foreground: #1c1917;
-            --color-muted: #78716c;
-            --color-border: #e7e5e4;
-            --color-primary: #1c1917;
-            --color-primary-foreground: #ffffff;
-            --color-accent: #b45309;
-            --color-destructive: #dc2626;
-        }
+      /* Primary: deep royal blue */
+      --color-primary: #1E3A8A;
+      --color-primary-foreground: #FFFFFF;
+
+      /* Secondary: soft blue-gray */
+      --color-secondary: #E2E8F0;
+      --color-secondary-foreground: #1E293B;
+
+      /* Accent: gold for totals and highlights */
+      --color-accent: #B45309;
+      --color-accent-foreground: #FFFFFF;
+
+      /* Muted text and surfaces */
+      --color-muted: #F1F5F9;
+      --color-muted-foreground: #64748B;
+
+      /* Status */
+      --color-success: #15803D;
+      --color-success-foreground: #FFFFFF;
+      --color-destructive: #B91C1C;
+      --color-destructive-foreground: #FFFFFF;
+
+      /* Borders and inputs */
+      --color-border: #CBD5E1;
+      --color-input: #CBD5E1;
+      --color-ring: #1E3A8A;
+    }
+
+    @variant dark {
+      --color-background: #0B1220;
+      --color-foreground: #F8FAFC;
+      --color-card: #111B2E;
+      --color-card-foreground: #F8FAFC;
+      --color-popover: #111B2E;
+      --color-popover-foreground: #F8FAFC;
+
+      /* Lighter blue so the primary stays visible on dark surfaces */
+      --color-primary: #3B82F6;
+      --color-primary-foreground: #0B1220;
+
+      --color-secondary: #1E293B;
+      --color-secondary-foreground: #F8FAFC;
+
+      --color-accent: #F59E0B;
+      --color-accent-foreground: #0B1220;
+
+      --color-muted: #1E293B;
+      --color-muted-foreground: #94A3B8;
+
+      --color-success: #22C55E;
+      --color-success-foreground: #0B1220;
+      --color-destructive: #EF4444;
+      --color-destructive-foreground: #0B1220;
+
+      --color-border: #1E293B;
+      --color-input: #1E293B;
+      --color-ring: #3B82F6;
+    }
   }
 }
