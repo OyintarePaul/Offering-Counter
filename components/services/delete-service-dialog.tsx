@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { services } from "@/db/schema";
@@ -22,12 +23,21 @@ type DeleteServiceDialogProps = {
 };
 
 export function DeleteServiceDialog({ serviceId }: DeleteServiceDialogProps) {
-  function handleConfirm() {
-    db.delete(services).where(eq(services.id, serviceId)).run();
+    const [isOpen, setIsOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+
+  async function handleConfirm() {
+    setIsLoading(true);
+    try {
+        await db.delete(services).where(eq(services.id, serviceId)).run();
+        setIsLoading(false)
+    } finally {
+        setIsOpen(false)
+    }
   }
 
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <Button
           className="bg-destructive/5"
@@ -45,13 +55,13 @@ export function DeleteServiceDialog({ serviceId }: DeleteServiceDialogProps) {
             Its categories and counts will be removed. This can&apos;t be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>
-            <Text>Cancel</Text>
-          </AlertDialogCancel>
-          <AlertDialogAction onPress={handleConfirm}>
-            <Text>Delete</Text>
-          </AlertDialogAction>
+        <AlertDialogFooter className="flex-row gap-2">
+          <Button variant="outline" onPress={() => setIsOpen(false)} disabled={isLoading} className="flex-1">
+          <Text>Cancel</Text>
+        </Button>
+        <Button onPress={handleConfirm} disabled={isLoading} variant="destructive" className="flex-1">
+          <Text>{isLoading ? "Removing..." : "Remove"}</Text>
+        </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

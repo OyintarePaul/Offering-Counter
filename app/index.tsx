@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { router, Stack } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useServiceTree } from "@/db/live";
 import { CustomHeader } from "@/components/custom-header";
 import { NewServiceDialog } from "@/components/services/new-service-dialog";
@@ -10,7 +9,6 @@ import { EmptyServices } from "@/components/services/empty-services";
 
 export default function ServicesScreen() {
   const { services: list, ready } = useServiceTree();
-  const insets = useSafeAreaInsets();
 
   const renderItem = useCallback(
     ({ item }: { item: ServiceItem }) => (
@@ -38,12 +36,8 @@ export default function ServicesScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      <View
-        style={{ paddingBottom: Math.max(insets.bottom, 16) }}
-        className="bg-background px-4 pt-3"
-      >
         <NewServiceDialog />
-      </View>
+
     </View>
   );
 }

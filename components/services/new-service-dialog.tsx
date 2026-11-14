@@ -26,11 +26,17 @@ import { upcomingSunday, formatServiceDate, toIsoDate, parseIsoDate } from "@/li
 import { findOrCreateService } from "@/db/services";
 import { Ionicon } from "@/components/ionicon"
 import { Plus } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function NewServiceDialog() {
+    const insets = useSafeAreaInsets();
   const [open, setOpen] = useState(false);
 
   return (
+    <View
+        style={{ paddingBottom: Math.max(insets.bottom, 30) }}
+        className="bg-background px-4 pt-3"
+      >
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
@@ -43,6 +49,7 @@ export function NewServiceDialog() {
         <NewServiceForm onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
+</View>
   );
 }
 
@@ -118,8 +125,6 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
             />
           )}
         </View>
-
-
       </View>
 
 
