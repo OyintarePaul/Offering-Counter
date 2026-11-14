@@ -1,12 +1,19 @@
 import "@/global.css";
 import { Stack } from "expo-router";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Text, View, useColorScheme } from "react-native";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { PortalHost } from "@rn-primitives/portal";
 import migrations from "@/drizzle/migrations";
 import { db } from "@/db/client";
+import { ThemeProvider } from 'expo-router/react-navigation';
+import { NAV_THEME } from '@/lib/theme';
+import { StatusBar } from 'expo-status-bar';
+import { useUniwind } from "uniwind";
+
 
 export default function RootLayout() {
+  const { theme } = useUniwind();
+  const resolvedTheme = theme === 'dark' ? 'dark' : 'light';
   const { success, error } = useMigrations(db, migrations);
 
   if (error) {
@@ -26,9 +33,10 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <ThemeProvider value={NAV_THEME[resolvedTheme]}>
+      <StatusBar style={resolvedTheme === 'dark' ? 'light' : 'dark'} />
       <Stack />
       <PortalHost />
-    </>
+    </ThemeProvider>
   );
 }
