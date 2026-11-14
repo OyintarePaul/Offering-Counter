@@ -83,6 +83,7 @@ export default function CategoryScreen() {
           className="flex-1"
           contentContainerClassName="gap-3 p-4 pb-80"
           keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
           data={rows}
           keyExtractor={(item) => String(item.denomination)}
           ListEmptyComponent={

@@ -78,9 +78,13 @@ export function AddCategoryDialog({ serviceId, existingNames, nextPosition, onCl
             <Button variant="outline" onPress={onClose} disabled={saving} className="flex-1">
               <Text>Cancel</Text>
             </Button>
-            <Button onPress={handleAdd} disabled={saving || !selected} className="flex-1">
-              <Text>{saving ? "Saving..." : "Add Category"}</Text>
-            </Button>
+            {options.length > 0 &&
+                (
+                    <Button onPress={handleAdd} disabled={saving || !selected} className="flex-1">
+                        <Text>{saving ? "Saving..." : "Add Category"}</Text>
+                    </Button>
+                )
+            }
         </DialogFooter>
       </DialogContent>
     </Dialog>

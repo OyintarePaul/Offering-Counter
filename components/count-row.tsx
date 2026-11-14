@@ -66,7 +66,7 @@ export function CountRow({
   return (
     <View onLayout={(e) => onLayoutY(e.nativeEvent.layout.y)}>
       <Card>
-        <CardContent className="flex-row items-center justify-between gap-1 p-4">
+        <CardContent className="flex-row items-center justify-between gap-1">
           <View className="flex-1">
           <Text variant="h4" className="">
             {formatNaira(denomination)}
