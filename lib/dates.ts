@@ -1,8 +1,8 @@
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
-const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const WEEKDAYS = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 
 function pad(n: number): string {
   return n < 10 ? `0${n}` : `${n}`;

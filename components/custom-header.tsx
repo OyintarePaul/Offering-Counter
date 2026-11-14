@@ -9,7 +9,7 @@ export function CustomHeader({ subtitle, title, back }: { subtitle?: string, tit
     const insets = useSafeAreaInsets()
     const router = useRouter();
     return (
-        <View style={{ paddingTop: insets.top + 40 }} className="px-4 flex-row gap-3 items-center">
+        <View style={{ paddingTop: insets.top + 40 }} className="px-4 pb-2 flex-row gap-3 items-center">
             { router.canGoBack() && <Button size="icon" variant="outline" onPress={() => router.back()}><Ionicon name="chevron-back" size={18}/></Button> }
             <View>
                 {subtitle &&
@@ -17,7 +17,7 @@ export function CustomHeader({ subtitle, title, back }: { subtitle?: string, tit
                         {subtitle}
                     </Text>
                 }
-                <Text variant="h3" className="-mt-0.5">
+                <Text variant="h3">
                     {title}
                 </Text>
             </View>
