@@ -14,12 +14,12 @@ type Props = {
   serviceId: number;
   existingNames: string[];
   nextPosition: number;
+  onClose:() => void;
 };
 
 // Mounted only while open, so each opening starts fresh.
-export function AddCategoryDialog({ serviceId, existingNames, nextPosition }: Props) {
+export function AddCategoryDialog({ serviceId, existingNames, nextPosition, onClose }: Props) {
   const options = CATEGORY_NAMES.filter((name) => !existingNames.includes(name));
-  const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState<string>(options[0] ?? "");
   const [saving, setSaving] = useState(false);
 
@@ -28,7 +28,7 @@ export function AddCategoryDialog({ serviceId, existingNames, nextPosition }: Pr
     setSaving(true);
     try {
       await addCategory(serviceId, selected, nextPosition);
-      setIsOpen(false);
+      onClose();
     } finally {
       setSaving(false);
     }
@@ -36,22 +36,16 @@ export function AddCategoryDialog({ serviceId, existingNames, nextPosition }: Pr
 
   return (
     <View className="px-4">
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild>
-        <Button variant="dashed">
-          <Icon as={Plus} className="size-4 text-primary" />
-          <Text>Add Category</Text>
-        </Button>
-      </DialogTrigger>
+    <Dialog open onOpenChange={(isOpen) => { if (!isOpen) onClose() }}>
       <DialogContent>
         <DialogHeader className="flex-row gap-2 items-center">
-        <Button size="icon" className="bg-primary/5">
-            <Icon as={Plus} className="text-primary" />
-        </Button>
-        <View>
-            <DialogTitle>Add Category</DialogTitle>
-            <Text variant="muted">Add an offering category</Text>
-        </View>
+            <Button size="icon" className="bg-primary/5">
+                <Icon as={Plus} className="text-primary" />
+            </Button>
+            <View>
+                <DialogTitle>Add Category</DialogTitle>
+                <Text variant="muted">Add an offering category</Text>
+            </View>
       </DialogHeader>
 
 
@@ -81,10 +75,10 @@ export function AddCategoryDialog({ serviceId, existingNames, nextPosition }: Pr
         )}
 
         <DialogFooter className="flex-row gap-2">
-            <Button variant="outline" onPress={() => setIsOpen(false)} disabled={saving} className="flex-1">
+            <Button variant="outline" onPress={onClose} disabled={saving} className="flex-1">
               <Text>Cancel</Text>
             </Button>
-            <Button onPress={handleAdd} disabled={saving} className="flex-1">
+            <Button onPress={handleAdd} disabled={saving || !selected} className="flex-1">
               <Text>{saving ? "Saving..." : "Add Category"}</Text>
             </Button>
         </DialogFooter>

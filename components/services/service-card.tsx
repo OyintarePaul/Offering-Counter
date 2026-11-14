@@ -11,7 +11,6 @@ export type ServiceItem = ReturnType<typeof useServiceTree>["services"][number];
 
 type ServiceCardProps = {
   service: ServiceItem;
-  onPress: (id: number) => void;
 };
 
 export function ServiceCard({ service }: ServiceCardProps) {
@@ -28,7 +27,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </View>
           <Text variant="muted" className="text-muted-foreground">
             {categoryCount}{" "}
-            {categoryCount === 1 ? "category" : "categories"}
+            {categoryCount === 1 ? "offering" : "offerings"}
           </Text>
           <DeleteServiceDialog serviceId={service.id} />
         </CardHeader>

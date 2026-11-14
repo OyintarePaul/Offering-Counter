@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Keyboard, ScrollView, TextInput, View } from "react-native";
+import { Keyboard, FlatList, TextInput, View } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useServiceTree } from "@/db/live";
 import { saveCount, removeDenomination } from "@/db/entries";
 import { categoryTotal, formatNaira } from "@/lib/money";
@@ -8,20 +9,10 @@ import { CountRow } from "@/components/count-row";
 import { AddDenominationDialog } from "@/components/add-denomination-dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-
 import { CustomHeader } from "@/components/custom-header";
 
 export default function CategoryScreen() {
+  const insets = useSafeAreaInsets();
   const { id, catId } = useLocalSearchParams<{ id: string; catId: string }>();
   const serviceId = Number(id);
   const categoryId = Number(catId);
@@ -34,7 +25,7 @@ export default function CategoryScreen() {
   const [focusDenom, setFocusDenom] = useState<number | null>(null);
   const [pendingRemove, setPendingRemove] = useState<number | null>(null);
   const inputRefs = useRef<Record<number, TextInput | null>>({});
-  const scrollRef = useRef<ScrollView>(null);
+  const listRef = useRef<FlatList>(null);
   const rowY = useRef<Record<number, number>>({});
 
   // Largest denominations first.
@@ -45,16 +36,15 @@ export default function CategoryScreen() {
   // After adding a denomination, move the cursor to its new input.
   useEffect(() => {
     if (focusDenom !== null && inputRefs.current[focusDenom]) {
+        console.log("")
       inputRefs.current[focusDenom]?.focus();
       setFocusDenom(null);
     }
   }, [focusDenom, rows]);
 
   // Scroll the focused row to the top of the visible area, above the keyboard.
-  function scrollToRow(denomination: number) {
-    const y = rowY.current[denomination];
-    if (y === undefined) return;
-    scrollRef.current?.scrollTo({ y: Math.max(0, y - 16), animated: true });
+  function scrollToRow(index: number) {
+    listRef.current?.scrollToIndex({ index, animated: true, viewPosition: 0.2 });
   }
 
   function focusNext(index: number) {
@@ -85,58 +75,60 @@ export default function CategoryScreen() {
   }
 
   return (
-    <View className="flex-1 bg-background">
+    <View style={{ paddingBottom: Math.max(insets.bottom, 30) }} className="flex-1 bg-background">
       <Stack.Screen options={{ header: () => <CustomHeader title={category.name} /> }} />
 
-      <View className="p-4">
-        <Text className="text-muted-foreground">Running total</Text>
-        <Text className="text-3xl font-bold text-accent">
-          {formatNaira(categoryTotal(category.entries))}
-        </Text>
-      </View>
+      <FlatList
+          ref={listRef}
+          className="flex-1"
+          contentContainerClassName="gap-3 p-4 pb-80"
+          keyboardShouldPersistTaps="handled"
+          data={rows}
+          keyExtractor={(item) => String(item.denomination)}
+          ListEmptyComponent={
+            <Text className="mt-10 text-center text-muted-foreground">
+              Add a denomination to start counting.
+            </Text>
+          }
+          ListHeaderComponent={
+            <View className="p-4">
+                <Text className="text-muted-foreground">Running total</Text>
+                <Text className="text-3xl font-bold text-accent">
+                  {formatNaira(categoryTotal(category.entries))}
+                </Text>
+            </View>
+          }
+          renderItem={({ item: row, index }) => (
+            <CountRow
+              categoryId={categoryId}
+              denomination={row.denomination}
+              count={row.count}
+              inputRef={(el) => {
+                inputRefs.current[row.denomination] = el;
+              }}
+              onChangeCount={(n) => {
+                void saveCount(categoryId, row.denomination, n);
+              }}
+              onNext={() => focusNext(index)}
+              isLast={index === rows.length - 1}
+              onRemove={() => {
+                if (row.count > 0) {
+                  setPendingRemove(row.denomination);
+                } else {
+                  void removeDenomination(categoryId, row.denomination);
+                }
+              }}
+              onLayoutY={(y) => {
+                rowY.current[row.denomination] = y;
+              }}
+              onFocusRow={() => scrollToRow(index)}
+            />
+          )}
+      />
 
-      <ScrollView
-        ref={scrollRef}
-        className="flex-1"
-        contentContainerClassName="gap-3 p-4 pb-80"
-        keyboardShouldPersistTaps="handled"
-      >
-        {rows.length === 0 && (
-          <Text className="mt-10 text-center text-muted-foreground">
-            Add a denomination to start counting.
-          </Text>
-        )}
 
-        {rows.map((row, index) => (
-          <CountRow
-            key={row.denomination}
-            denomination={row.denomination}
-            count={row.count}
-            inputRef={(el) => {
-              inputRefs.current[row.denomination] = el;
-            }}
-            onChangeCount={(n) => {
-              void saveCount(categoryId, row.denomination, n);
-            }}
-            onNext={() => focusNext(index)}
-            isLast={index === rows.length - 1}
-            onRemove={() => {
-              if (row.count > 0) {
-                setPendingRemove(row.denomination);
-              } else {
-                void removeDenomination(categoryId, row.denomination);
-              }
-            }}
-            onLayoutY={(y) => {
-              rowY.current[row.denomination] = y;
-            }}
-            onFocusRow={() => scrollToRow(row.denomination)}
-          />
-        ))}
-      </ScrollView>
-
-      <View className="p-4">
-        <Button variant="outline" onPress={() => setAddOpen(true)}>
+      <View className="px-4 pt-2">
+        <Button variant="dashed" onPress={() => setAddOpen(true)}>
           <Text>Add Denomination</Text>
         </Button>
       </View>
@@ -149,32 +141,6 @@ export default function CategoryScreen() {
           onClose={() => setAddOpen(false)}
         />
       )}
-
-      <AlertDialog
-        open={pendingRemove !== null}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) setPendingRemove(null);
-        }}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Remove {pendingRemove !== null ? formatNaira(pendingRemove) : ""}?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              Its count will be cleared. This can't be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>
-              <Text>Cancel</Text>
-            </AlertDialogCancel>
-            <AlertDialogAction onPress={confirmRemove}>
-              <Text>Remove</Text>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </View>
   );
 }

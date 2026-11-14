@@ -9,6 +9,9 @@ import { ViewReportBtn } from "@/components/service-detail/view-report-btn"
 import { CustomHeader } from "@/components/custom-header";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Plus } from "lucide-react-native"
+
 import {
   CategoryCard,
   type CategoryItem,
@@ -18,6 +21,7 @@ import { ServiceSummary } from "@/components/service-detail/service-summary";
 
 export default function ServiceDetailsScreen() {
   const insets = useSafeAreaInsets();
+  const [addOpen, setAddOpen] = useState(false)
   const { id } = useLocalSearchParams<{ id: string }>();
   const serviceId = Number(id);
 
@@ -94,11 +98,21 @@ export default function ServiceDetailsScreen() {
         contentContainerClassName="gap-4 p-4 flex-grow"
         showsVerticalScrollIndicator={false}
       />
-      <AddCategoryDialog
-            serviceId={serviceId}
-            existingNames={existingNames}
-            nextPosition={nextPosition}
+
+      {addOpen && (
+        <AddCategoryDialog
+          serviceId={serviceId}
+          existingNames={existingNames}
+          nextPosition={nextPosition}
+          onClose={() => setAddOpen(false)}
         />
+      )}
+        <View className="px-4">
+            <Button variant="dashed" onPress={() => setAddOpen(true)}>
+              <Icon as={Plus} className="size-4 text-primary" />
+              <Text>Add Category</Text>
+            </Button>
+        </View>
 
         <ViewReportBtn serviceId={serviceId} />
     </View>
