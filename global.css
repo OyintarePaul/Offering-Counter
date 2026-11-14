@@ -35,8 +35,8 @@
       --color-destructive-foreground: #FFFFFF;
 
       /* Borders and inputs */
-      --color-border: #CBD5E1;
-      --color-input: #CBD5E1;
+      --color-border: #E2E8F0;
+      --color-input: #E2E8F0;
       --color-ring: #1E3A8A;
 
       --radius-sm: 8px;
@@ -71,8 +71,8 @@
       --color-destructive: #EF4444;
       --color-destructive-foreground: #0B1220;
 
-      --color-border: #1E293B;
-      --color-input: #1E293B;
+      --color-border: #17213A;
+      --color-input: #17213A;
       --color-ring: #3B82F6;
 
       --radius-sm: 8px;
