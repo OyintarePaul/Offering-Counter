@@ -88,8 +88,8 @@ export default function CategoryScreen() {
     <View className="flex-1 bg-background">
       <Stack.Screen options={{ header: () => <CustomHeader title={category.name} /> }} />
 
-      <View className="border-b border-border bg-card p-4">
-        <Text className="text-muted-foreground">{category.name} total</Text>
+      <View className="p-4">
+        <Text className="text-muted-foreground">Running total</Text>
         <Text className="text-3xl font-bold text-accent">
           {formatNaira(categoryTotal(category.entries))}
         </Text>

@@ -24,8 +24,6 @@ export default function ServiceDetailsScreen() {
   const { services: list, ready } = useServiceTree();
   const service = list.find((s) => s.id === serviceId);
 
-  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
-
   const existingNames = useMemo(
     () => service?.categories.map((c) => c.name) ?? [],
     [service?.categories]

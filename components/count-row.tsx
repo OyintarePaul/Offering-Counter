@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
 import { formatNaira, rowTotal } from "@/lib/money";
+import { Plus, Minus, Trash } from "lucide-react-native";
 
 // Turns typed text into a count. Empty or non-numeric text counts as 0.
 export function parseCount(text: string): number {
@@ -50,13 +53,27 @@ export function CountRow({
     onChangeCount(parseCount(clean));
   }
 
+    function handleStep(amount: number) {
+        const next = Math.max(0, count + amount);
+        setText(next === 0 ? "" : String(next));
+        onChangeCount(next);
+    }
+
+
   return (
     <View onLayout={(e) => onLayoutY(e.nativeEvent.layout.y)}>
       <Card>
-        <CardContent className="flex-row items-center justify-between gap-3 p-4">
-          <Text className="w-24 text-base font-semibold text-foreground">
+        <CardContent className="flex-row items-center justify-between gap-1 p-4">
+          <View className="flex-1">
+          <Text variant="h4" className="">
             {formatNaira(denomination)}
           </Text>
+          <Text variant="muted" className="text-muted-foreground">= {formatNaira(rowTotal(denomination, count))}</Text>
+          </View>
+
+          <Button size="icon" variant="secondary" className="bg-muted" onPress={() => handleStep(-1)} disabled={count <= 0}>
+             <Icon as={Minus} className="text-muted-foreground size-4"/>
+          </Button>
 
           <TextInput
             ref={inputRef}
@@ -68,16 +85,17 @@ export function CountRow({
             selectTextOnFocus
             returnKeyType={isLast ? "done" : "next"}
             onSubmitEditing={onNext}
-            className="h-12 w-20 rounded-md border border-input bg-background px-3 text-center text-lg text-foreground"
+            style={{ fontVariant: ["tabular-nums"]}}
+            className="h-12 w-9 rounded-md border-0 px-1 text-center"
           />
 
-          <Text className="flex-1 text-right font-semibold text-foreground">
-            {formatNaira(rowTotal(denomination, count))}
-          </Text>
+          <Button size="icon" className="bg-primary" onPress={() => handleStep(1)}>
+             <Icon as={Plus} className="text-primary-foreground size-4"/>
+          </Button>
 
-          <Pressable onPress={onRemove} hitSlop={8}>
-            <Text className="text-xl text-destructive">×</Text>
-          </Pressable>
+          <Button size="icon" variant="destructive" className="bg-destructive/5 size-10" onPress={onRemove}>
+             <Icon as={Trash} className="text-destructive size-4"/>
+          </Button>
         </CardContent>
       </Card>
     </View>
