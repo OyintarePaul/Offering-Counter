@@ -21,6 +21,8 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
+import { CustomHeader } from "@/components/custom-header"
+
 export default function ServiceScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const serviceId = Number(id);
@@ -55,11 +57,9 @@ export default function ServiceScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <Stack.Screen options={{ title: service.label }} />
+      <Stack.Screen options={{ header: ({ back }) => <CustomHeader title={service.label} subtitle={formatServiceDate(service.serviceDate)} back={back}/> }} />
 
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
-        <Text className="text-muted-foreground">{formatServiceDate(service.serviceDate)}</Text>
-
         {service.categories.length === 0 && (
           <Text className="mt-10 text-center text-muted-foreground">
             No categories yet. Tap Add Category to start.

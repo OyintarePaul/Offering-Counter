@@ -36,12 +36,7 @@ export default function RootLayout() {
 	return (
 		<ThemeProvider value={NAV_THEME[resolvedTheme]}>
 			<StatusBar style={resolvedTheme === "dark" ? "light" : "dark"} />
-			<Stack screenOptions={{
-                headerStyle: {
-                    height: 80,
-                    paddingTop: 80,
-                }
-            }}/>
+			<Stack />
 			<PortalHost />
 		</ThemeProvider>
 	);

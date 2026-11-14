@@ -9,13 +9,15 @@ export function CustomHeader({ subtitle, title, back }: { subtitle?: string, tit
     const insets = useSafeAreaInsets()
     const router = useRouter();
     return (
-        <View style={{ paddingTop: insets.top + 30 }} className="px-4 flex-row gap-3">
+        <View style={{ paddingTop: insets.top + 30 }} className="px-4 flex-row gap-3 items-center">
             { back && <Button size="icon" variant="outline"><Ionicon name="chevron-back" size={18} /></Button> }
             <View>
-                <Text variant="muted">
-                    {subtitle}
-                </Text>
-                <Text variant="h2">
+                {subtitle &&
+                    <Text variant="muted" className="leading-none">
+                        {subtitle}
+                    </Text>
+                }
+                <Text variant="h2" className="-mt-0.5">
                     {title}
                 </Text>
             </View>
