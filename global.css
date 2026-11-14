@@ -38,6 +38,11 @@
       --color-border: #CBD5E1;
       --color-input: #CBD5E1;
       --color-ring: #1E3A8A;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
     }
 
     @variant dark {
@@ -69,6 +74,11 @@
       --color-border: #1E293B;
       --color-input: #1E293B;
       --color-ring: #3B82F6;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
     }
   }
 }

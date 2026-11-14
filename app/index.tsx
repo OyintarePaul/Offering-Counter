@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 import { eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { services } from "@/db/schema";
@@ -11,6 +11,8 @@ import { NewServiceDialog } from "@/components/new-service-dialog";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { CustomHeader } from "@/components/custom-header"
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -36,6 +38,7 @@ export default function ServicesScreen() {
 
   return (
     <View className="flex-1 bg-background">
+        <Stack.Screen options={{ header: ({ back }) => <CustomHeader subtitle="Offering Counter" title="Services" back={back}/> }}/>
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
         {ready && list.length === 0 && (
           <Text className="mt-10 text-center text-muted-foreground">
