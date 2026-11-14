@@ -38,7 +38,7 @@ export default function ServicesScreen() {
 
   return (
     <View className="flex-1 bg-background">
-        <Stack.Screen options={{ header: ({ back }) => <CustomHeader subtitle="Offering Counter" title="Services" back={back}/> }}/>
+        <Stack.Screen options={{ header: () => <CustomHeader subtitle="Offering Counter" title="Services"/> }}/>
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
         {ready && list.length === 0 && (
           <Text className="mt-10 text-center text-muted-foreground">

@@ -19,6 +19,8 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
+import { CustomHeader } from "@/components/custom-header";
+
 export default function CategoryScreen() {
   const { id, catId } = useLocalSearchParams<{ id: string; catId: string }>();
   const serviceId = Number(id);
@@ -84,7 +86,7 @@ export default function CategoryScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <Stack.Screen options={{ title: category.name }} />
+      <Stack.Screen options={{ header: () => <CustomHeader title={category.name} /> }} />
 
       <View className="border-b border-border bg-card p-4">
         <Text className="text-muted-foreground">{category.name} total</Text>

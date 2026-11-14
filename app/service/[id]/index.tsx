@@ -57,7 +57,7 @@ export default function ServiceScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <Stack.Screen options={{ header: ({ back }) => <CustomHeader title={service.label} subtitle={formatServiceDate(service.serviceDate)} back={back}/> }} />
+      <Stack.Screen options={{ header: () => <CustomHeader title={service.label} subtitle={formatServiceDate(service.serviceDate)}/> }} />
 
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
         {service.categories.length === 0 && (
