@@ -4,6 +4,9 @@ import { db } from "@/db/client";
 import { services } from "@/db/schema";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { Icon } from "@/components/ui/icon";
+import { Trash } from "lucide-react-native";
+
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -40,20 +43,24 @@ export function DeleteServiceDialog({ serviceId }: DeleteServiceDialogProps) {
 		<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
 			<AlertDialogTrigger asChild>
 				<Button
-					className="bg-destructive/5"
+					variant="destructive-soft"
 					size="icon"
 					onPress={(e) => e.stopPropagation()}
 				>
-					<Ionicon
-						name="trash-outline"
-						size={18}
-						colorClassName="accent-destructive"
-					/>
+					<Icon as={Trash} className="size-4"/>
+
 				</Button>
 			</AlertDialogTrigger>
 
 			<AlertDialogContent>
 				<AlertDialogHeader>
+                    <Button
+                        variant="destructive-soft"
+                        size="icon"
+                        onPress={(e) => e.stopPropagation()}
+                    >
+                        <Icon as={Trash} className="size-4" />
+                    </Button>
 					<AlertDialogTitle>Delete this service?</AlertDialogTitle>
 					<AlertDialogDescription>
 						Its categories and counts will be removed. This can&apos;t be

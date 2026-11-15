@@ -37,7 +37,9 @@ export default function ReportScreen() {
 		if (!captureContainerRef.current) {
 			throw new Error("Report view is not ready.");
 		}
+
 		return captureRef(captureContainerRef, {
+            fileName: service?.name,
 			format: "png",
 			quality: 1,
 		});
@@ -148,7 +150,7 @@ export default function ReportScreen() {
 						disabled={isBusy}
 						onPress={() => handleSave()}
 					>
-						<Icon as={Download} className="size-4 text-foreground" />
+						<Icon as={Download} className="size-4" />
 						<Text>{isSaving ? "Saving..." : "Save"}</Text>
 					</Button>
 

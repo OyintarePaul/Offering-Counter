@@ -41,8 +41,9 @@ export function DeleteDenominationDialog({ categoryId, denomination }: Props) {
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogTrigger asChild>
                 <Button
+                    variant="destructive-soft"
                     size="icon"
-                    className="bg-destructive/5 size-10"
+                    className="size-10"
                 >
                     <Icon as={Trash} className="text-destructive size-4" />
                 </Button>
@@ -50,11 +51,11 @@ export function DeleteDenominationDialog({ categoryId, denomination }: Props) {
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <Button
-                        className="bg-destructive/5"
+                        variant="destructive-soft"
                         size="icon"
                         onPress={(e) => e.stopPropagation()}
                     >
-                        <Icon as={Trash} className="text-destructive size-4" />
+                        <Icon as={Trash} className="size-4" />
                     </Button>
                     <AlertDialogTitle>
                         Remove {formatNaira(denomination)}?

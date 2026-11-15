@@ -42,7 +42,7 @@ export function DeleteCategoryDialog({
 		<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
 			<AlertDialogTrigger asChild>
 				<Button
-					className="bg-destructive/5"
+					variant="destructive-soft"
 					size="icon"
 					onPress={(e) => e.stopPropagation()}
 				>
@@ -52,11 +52,11 @@ export function DeleteCategoryDialog({
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<Button
-						className="bg-destructive/5"
+						variant="destructive-soft"
 						size="icon"
 						onPress={(e) => e.stopPropagation()}
 					>
-						<Icon as={Trash} className="text-destructive size-4" />
+						<Icon as={Trash} className="size-4" />
 					</Button>
 					<AlertDialogTitle>Remove this category?</AlertDialogTitle>
 					<AlertDialogDescription>

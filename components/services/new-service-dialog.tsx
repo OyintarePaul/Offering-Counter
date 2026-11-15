@@ -70,11 +70,9 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 	const [showPicker, setShowPicker] = useState(false);
 	const [saving, setSaving] = useState(false);
 
-	function handleDateChange(event: DateTimePickerEvent, selected?: Date) {
+	function handleDateChange(_, selected: Date) {
 		setShowPicker(false);
-		if (event.type === "set" && selected) {
-			setServiceDate(toIsoDate(selected));
-		}
+		setServiceDate(toIsoDate(selected));
 	}
 
 	async function handleCreate() {
@@ -112,7 +110,7 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 						<SelectTrigger className="h-12">
 							<SelectValue placeholder="Choose a service" />
 						</SelectTrigger>
-						<SelectContent>
+						<SelectContent className="w-50">
 							{SERVICE_LABELS.map((l, i) => (
 								<SelectItem key={l} value={l} label={l} index={i}>
 									{l}
@@ -138,7 +136,8 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 							value={parseIsoDate(serviceDate)}
 							mode="date"
 							display="default"
-							onChange={handleDateChange}
+							onValueChange={handleDateChange}
+                            onDismiss={() => setShowPicker(false)}
 						/>
 					)}
 				</View>

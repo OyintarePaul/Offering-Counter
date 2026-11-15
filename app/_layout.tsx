@@ -45,6 +45,7 @@ export default function RootLayout() {
 		<ThemeProvider value={NAV_THEME[resolvedTheme]}>
 			<StatusBar style={resolvedTheme === "dark" ? "light" : "dark"} />
 			<Stack screenOptions={{
+                title: "",
                 contentStyle: {
                     backgroundColor: NAV_THEME[resolvedTheme].colors.background
                 }
