@@ -4,7 +4,6 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@react-native-community/datetimepicker": "9.2.1",
-    "@react-native-vector-icons/ionicons": "^14.0.0",
     "@rn-primitives/alert-dialog": "^1.5.2",
     "@rn-primitives/dialog": "^1.5.2",
     "@rn-primitives/label": "^1.5.2",
