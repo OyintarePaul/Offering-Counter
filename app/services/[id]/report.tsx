@@ -28,7 +28,7 @@ export default function ReportScreen() {
 	const captureContainerRef = useRef<View>(null);
 	const [permissionResponse, requestPermission] = usePermissions({
 		granularPermissions: ["photo"],
-        writeOnly: true
+		writeOnly: true,
 	});
 
 	const service = services.find((s) => s.id === Number(id));
@@ -47,37 +47,37 @@ export default function ReportScreen() {
 	}
 
 	const { mutate: handleSave, isPending: isSaving } = useMutation(async () => {
-        try {
-            if (permissionResponse?.status !== "granted") {
-            const { granted } = await requestPermission();
-            if (!granted) {
-                Alert.alert(
-                    "Permission required",
-                    "Please allow photo library access to save the report.",
-                );
-                return;
-            }
-        }
+		try {
+			if (permissionResponse?.status !== "granted") {
+				const { granted } = await requestPermission();
+				if (!granted) {
+					Alert.alert(
+						"Permission required",
+						"Please allow photo library access to save the report.",
+					);
+					return;
+				}
+			}
 
-            const uri = await captureReportImage();
-            if (!uri) {
-                throw new Error("Failed to generate report image URL")
-            }
+			const uri = await captureReportImage();
+			if (!uri) {
+				throw new Error("Failed to generate report image URL");
+			}
 
-            const localUri = uri.startsWith("file://") ? uri : `file://${uri}`;
+			const localUri = uri.startsWith("file://") ? uri : `file://${uri}`;
 
-            await Asset.create(localUri);
+			await Asset.create(localUri);
 
-            Alert.alert("Saved", "Report image saved to your gallery.");
-        } catch (error) {
-            console.error("Failed to save report:", error);
-            Alert.alert(
-                "Save failed",
-                error instanceof Error
-                    ? error.message
-                    : "Could not save the report image to your gallery.",
-            );
-        }
+			Alert.alert("Saved", "Report image saved to your gallery.");
+		} catch (error) {
+			console.error("Failed to save report:", error);
+			Alert.alert(
+				"Save failed",
+				error instanceof Error
+					? error.message
+					: "Could not save the report image to your gallery.",
+			);
+		}
 	});
 
 	const { mutate: handleShare, isPending: isSharing } = useMutation(
@@ -217,18 +217,18 @@ function OfferingCard({ offering }: { offering: OfferingItem }) {
 function ReportHeader({ report }: { report: ReportModel }) {
 	return (
 		<Card className="bg-primary">
-            <CardContent className="gap-2">
-            <Text className="text-sm text-primary-foreground">
-                Grand total &bull; {report.serviceLabel}
-            </Text>
-            <Text
-                variant="h1"
-                className="text-background leading-none"
-                style={TABULAR_NUMS}
-            >
-                {formatNaira(report.grandTotal)}
-            </Text>
-            </CardContent>
+			<CardContent className="gap-2">
+				<Text className="text-sm text-primary-foreground">
+					Grand total &bull; {report.serviceLabel}
+				</Text>
+				<Text
+					variant="h1"
+					className="text-background leading-none"
+					style={TABULAR_NUMS}
+				>
+					{formatNaira(report.grandTotal)}
+				</Text>
+			</CardContent>
 		</Card>
 	);
 }

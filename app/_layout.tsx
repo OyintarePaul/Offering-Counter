@@ -12,13 +12,13 @@ import migrations from "@/drizzle/migrations";
 import { NAV_THEME } from "@/lib/theme";
 import * as SystemUI from "expo-system-ui";
 import { useLoadFonts } from "@/hooks/use-load-fonts";
-import * as SplashScreen from "expo-splash-screen"
+import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const [fontsLoaded, fontsError] = useLoadFonts();
-    const { theme } = useUniwind();
+	const { theme } = useUniwind();
 
 	const resolvedTheme = theme === "dark" ? "dark" : "light";
 	const { success, error } = useMigrations(db, migrations);
@@ -29,9 +29,9 @@ export default function RootLayout() {
 		);
 	}, [resolvedTheme]);
 
-    useEffect(() => {
-        if (fontsLoaded || fontsError) SplashScreen.hideAsync()
-    }, [fontsLoaded, fontsError])
+	useEffect(() => {
+		if (fontsLoaded || fontsError) SplashScreen.hideAsync();
+	}, [fontsLoaded, fontsError]);
 
 	if (error) {
 		return (

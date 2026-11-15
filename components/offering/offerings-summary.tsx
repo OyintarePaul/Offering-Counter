@@ -12,10 +12,7 @@ export function OfferingsSummary({ offerings }: OfferingsSummaryProps) {
 	return (
 		<Card className="bg-primary">
 			<CardContent className="gap-2">
-				<Text
-					variant="muted"
-					className="text-background leading-none"
-				>
+				<Text variant="muted" className="text-background leading-none">
 					Service total
 				</Text>
 				<Text variant="h1" className="text-background leading-none">
