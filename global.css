@@ -1,84 +1,84 @@
-@import 'tailwindcss';
-@import 'uniwind';
+@import "tailwindcss";
+@import "uniwind";
 
 @layer theme {
-  :root {
-    @variant light {
-      /* Surfaces */
-      --color-background: #F8FAFC;
-      --color-foreground: #0F172A;
-      --color-card: #FFFFFF;
-      --color-card-foreground: #0F172A;
-      --color-popover: #FFFFFF;
-      --color-popover-foreground: #0F172A;
+	:root {
+		@variant light {
+			/* Surfaces */
+			--color-background: #f8fafc;
+			--color-foreground: #0f172a;
+			--color-card: #ffffff;
+			--color-card-foreground: #0f172a;
+			--color-popover: #ffffff;
+			--color-popover-foreground: #0f172a;
 
-      /* Primary: deep royal blue */
-      --color-primary: #1E3A8A;
-      --color-primary-foreground: #FFFFFF;
+			/* Primary: deep royal blue */
+			--color-primary: #1e3a8a;
+			--color-primary-foreground: #ffffff;
 
-      /* Secondary: soft blue-gray */
-      --color-secondary: #E2E8F0;
-      --color-secondary-foreground: #1E293B;
+			/* Secondary: soft blue-gray */
+			--color-secondary: #e2e8f0;
+			--color-secondary-foreground: #1e293b;
 
-      /* Accent: gold for totals and highlights */
-      --color-accent: #B45309;
-      --color-accent-foreground: #FFFFFF;
+			/* Accent: gold for totals and highlights */
+			--color-accent: #b45309;
+			--color-accent-foreground: #ffffff;
 
-      /* Muted text and surfaces */
-      --color-muted: #F1F5F9;
-      --color-muted-foreground: #64748B;
+			/* Muted text and surfaces */
+			--color-muted: #f1f5f9;
+			--color-muted-foreground: #64748b;
 
-      /* Status */
-      --color-success: #15803D;
-      --color-success-foreground: #FFFFFF;
-      --color-destructive: #B91C1C;
-      --color-destructive-foreground: #FFFFFF;
+			/* Status */
+			--color-success: #15803d;
+			--color-success-foreground: #ffffff;
+			--color-destructive: #b91c1c;
+			--color-destructive-foreground: #ffffff;
 
-      /* Borders and inputs */
-      --color-border: #E2E8F0;
-      --color-input: #E2E8F0;
-      --color-ring: #1E3A8A;
+			/* Borders and inputs */
+			--color-border: #e2e8f0;
+			--color-input: #e2e8f0;
+			--color-ring: #1e3a8a;
 
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-    }
+			--radius-sm: 8px;
+			--radius-md: 12px;
+			--radius-lg: 16px;
+			--radius-xl: 20px;
+		}
 
-    @variant dark {
-      --color-background: #0B1220;
-      --color-foreground: #F8FAFC;
-      --color-card: #111B2E;
-      --color-card-foreground: #F8FAFC;
-      --color-popover: #111B2E;
-      --color-popover-foreground: #F8FAFC;
+		@variant dark {
+			--color-background: #0b1220;
+			--color-foreground: #f8fafc;
+			--color-card: #111b2e;
+			--color-card-foreground: #f8fafc;
+			--color-popover: #111b2e;
+			--color-popover-foreground: #f8fafc;
 
-      /* Lighter blue so the primary stays visible on dark surfaces */
-      --color-primary: #3B82F6;
-      --color-primary-foreground: #0B1220;
+			/* Lighter blue so the primary stays visible on dark surfaces */
+			--color-primary: #3b82f6;
+			--color-primary-foreground: #0b1220;
 
-      --color-secondary: #1E293B;
-      --color-secondary-foreground: #F8FAFC;
+			--color-secondary: #1e293b;
+			--color-secondary-foreground: #f8fafc;
 
-      --color-accent: #F59E0B;
-      --color-accent-foreground: #0B1220;
+			--color-accent: #f59e0b;
+			--color-accent-foreground: #0b1220;
 
-      --color-muted: #1E293B;
-      --color-muted-foreground: #94A3B8;
+			--color-muted: #1e293b;
+			--color-muted-foreground: #94a3b8;
 
-      --color-success: #22C55E;
-      --color-success-foreground: #0B1220;
-      --color-destructive: #EF4444;
-      --color-destructive-foreground: #0B1220;
+			--color-success: #22c55e;
+			--color-success-foreground: #0b1220;
+			--color-destructive: #ef4444;
+			--color-destructive-foreground: #0b1220;
 
-      --color-border: #17213A;
-      --color-input: #17213A;
-      --color-ring: #3B82F6;
+			--color-border: #17213a;
+			--color-input: #17213a;
+			--color-ring: #3b82f6;
 
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-    }
-  }
+			--radius-sm: 8px;
+			--radius-md: 12px;
+			--radius-lg: 16px;
+			--radius-xl: 20px;
+		}
+	}
 }

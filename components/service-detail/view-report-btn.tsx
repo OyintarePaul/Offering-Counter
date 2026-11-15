@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 
 interface ViewReportBtnProps {
-    serviceId: string
+	serviceId: string;
 }
 
 export function ViewReportBtn({ serviceId }: ViewReportBtnProps) {
-    return (
-        <View className="px-4 pt-4">
-            <Link href={`/service/${serviceId}/report`} asChild>
-            <Button>
-                <Text>View Report</Text>
-            </Button>
-            </Link>
-        </View>
-    )
+	return (
+		<View className="px-4 pt-4">
+			<Link href={`/service/${serviceId}/report`} asChild>
+				<Button>
+					<Text>View Report</Text>
+				</Button>
+			</Link>
+		</View>
+	);
 }
