@@ -2,8 +2,6 @@ import { Trash } from "lucide-react-native";
 import { useState } from "react";
 import {
 	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
 	AlertDialogFooter,

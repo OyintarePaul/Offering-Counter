@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { type ComponentRef, Ref, useEffect, useRef, useState } from "react";
+import { type ComponentRef, useEffect, useRef, useState } from "react";
 import { FlatList, Keyboard, type TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CountRow } from "@/components/count-row";
@@ -7,7 +7,7 @@ import { CustomHeader } from "@/components/custom-header";
 import { AddDenominationDialog } from "@/components/offering/add-denomination-dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { removeDenomination, saveCount } from "@/db/entries";
+import { saveCount } from "@/db/entries";
 import { useServiceTree } from "@/db/live";
 import { categoryTotal, formatNaira } from "@/lib/money";
 
@@ -27,7 +27,6 @@ export default function OfferingsDetailsScreen() {
 
 	const [addOpen, setAddOpen] = useState(false);
 	const [focusDenom, setFocusDenom] = useState<number | null>(null);
-	const [pendingRemove, setPendingRemove] = useState<number | null>(null);
 	const inputRefs = useRef<Record<number, TextInputInstance | null>>({});
 	const listRef = useRef<FlatList>(null);
 	const rowY = useRef<Record<number, number>>({});
@@ -61,12 +60,6 @@ export default function OfferingsDetailsScreen() {
 		} else {
 			Keyboard.dismiss();
 		}
-	}
-
-	async function confirmRemove() {
-		if (pendingRemove === null) return;
-		await removeDenomination(offeringId, pendingRemove);
-		setPendingRemove(null);
 	}
 
 	if (!ready) {

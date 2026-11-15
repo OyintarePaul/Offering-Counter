@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";

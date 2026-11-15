@@ -5,7 +5,7 @@ import { Download, Share2 } from "lucide-react-native";
 import { type ComponentRef, useRef } from "react";
 import { Alert, FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ViewShot, { captureRef } from "react-native-view-shot";
+import ViewShot from "react-native-view-shot";
 import { CustomHeader } from "@/components/custom-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

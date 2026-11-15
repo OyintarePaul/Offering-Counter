@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Pressable, View } from "react-native";
 import { DeleteOfferingDialog } from "@/components/offering/delete-offering-dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import type { useServiceTree } from "@/db/live";
 import { categoryTotal, formatNaira } from "@/lib/money";

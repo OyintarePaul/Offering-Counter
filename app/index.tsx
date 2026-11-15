@@ -1,4 +1,4 @@
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { CustomHeader } from "@/components/custom-header";

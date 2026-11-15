@@ -8,7 +8,6 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Icon } from "@/components/ui/icon";
 import { Label } from "@/components/ui/label";
