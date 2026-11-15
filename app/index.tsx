@@ -1,14 +1,14 @@
+import { router, Stack } from "expo-router";
 import { useCallback } from "react";
 import { FlatList, View } from "react-native";
-import { router, Stack } from "expo-router";
-import { useServiceTree } from "@/db/live";
 import { CustomHeader } from "@/components/custom-header";
+import { EmptyServices } from "@/components/services/empty-services";
 import { NewServiceDialog } from "@/components/services/new-service-dialog";
 import {
 	ServiceCard,
 	type ServiceItem,
 } from "@/components/services/service-card";
-import { EmptyServices } from "@/components/services/empty-services";
+import { useServiceTree } from "@/db/live";
 
 export default function ServicesScreen() {
 	const { services: list, ready } = useServiceTree();

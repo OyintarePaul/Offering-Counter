@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { Pressable, TextInput, View } from "react-native";
-import { Card, CardContent } from "@/components/ui/card";
-import { Text } from "@/components/ui/text";
-import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
-import { formatNaira, rowTotal } from "@/lib/money";
-import { Plus, Minus, Trash } from "lucide-react-native";
+import { Minus, Plus } from "lucide-react-native";
+import { type ComponentRef, useEffect, useState } from "react";
+import { TextInput, View } from "react-native";
 import { DeleteDenominationDialog } from "@/components/offering/delete-denomination-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { formatNaira, rowTotal } from "@/lib/money";
 
 // Turns typed text into a count. Empty or non-numeric text counts as 0.
 export function parseCount(text: string): number {
@@ -18,11 +18,10 @@ type Props = {
 	offeringId: number;
 	denomination: number;
 	count: number;
-	inputRef: (el: TextInput | null) => void;
+	inputRef: (el: ComponentRef<typeof TextInput> | null) => void;
 	onChangeCount: (count: number) => void;
 	onNext: () => void;
 	isLast: boolean;
-	onRemove: () => void;
 	onLayoutY: (y: number) => void;
 	onFocusRow: () => void;
 };
@@ -35,7 +34,6 @@ export function CountRow({
 	onChangeCount,
 	onNext,
 	isLast,
-	onRemove,
 	onLayoutY,
 	onFocusRow,
 }: Props) {
@@ -67,9 +65,7 @@ export function CountRow({
 			<Card>
 				<CardContent className="flex-row items-center justify-between gap-1">
 					<View className="flex-1">
-						<Text variant="h4" className="">
-							{formatNaira(denomination)}
-						</Text>
+						<Text variant="h4">{formatNaira(denomination)}</Text>
 						<Text variant="muted" className="text-muted-foreground">
 							= {formatNaira(rowTotal(denomination, count))}
 						</Text>

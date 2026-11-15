@@ -1,12 +1,6 @@
-import { useState } from "react";
 import { eq } from "drizzle-orm";
-import { db } from "@/db/client";
-import { services } from "@/db/schema";
-import { Button } from "@/components/ui/button";
-import { Text } from "@/components/ui/text";
-import { Icon } from "@/components/ui/icon";
 import { Trash } from "lucide-react-native";
-
+import { useState } from "react";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -18,8 +12,11 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import { Ionicon } from "@/components/ionicon";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { db } from "@/db/client";
+import { services } from "@/db/schema";
 
 type DeleteServiceDialogProps = {
 	serviceId: number;

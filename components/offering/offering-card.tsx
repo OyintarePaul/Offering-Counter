@@ -1,10 +1,10 @@
-import { Pressable, View } from "react-native";
 import { Link } from "expo-router";
+import { Pressable, View } from "react-native";
+import { DeleteOfferingDialog } from "@/components/offering/delete-offering-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { categoryTotal, formatNaira } from "@/lib/money";
 import type { useServiceTree } from "@/db/live";
-import { DeleteOfferingDialog } from "@/components/offering/delete-offering-dialog";
+import { categoryTotal, formatNaira } from "@/lib/money";
 import { routes } from "@/lib/routes";
 
 export type OfferingItem = ReturnType<
@@ -13,7 +13,7 @@ export type OfferingItem = ReturnType<
 
 type Props = {
 	offering: OfferingItem;
-	serviceId: string;
+	serviceId: number;
 };
 
 export function OfferingCard({ offering, serviceId }: Props) {

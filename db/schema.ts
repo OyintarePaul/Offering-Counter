@@ -1,11 +1,11 @@
+import { relations } from "drizzle-orm";
 import {
-	sqliteTable,
 	integer,
-	text,
 	primaryKey,
+	sqliteTable,
+	text,
 	unique,
 } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
 
 export const services = sqliteTable(
 	"services",

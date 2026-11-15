@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { View } from "react-native";
 import DateTimePicker, {
-	DateTimePickerEvent,
+	type DateTimePickerChangeEvent,
 } from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
+import { Plus } from "lucide-react-native";
+import { useState } from "react";
+import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -12,10 +15,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Text } from "@/components/ui/text";
 import { Icon } from "@/components/ui/icon";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -23,16 +24,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { SERVICE_LABELS } from "@/lib/presets";
-import {
-	upcomingSunday,
-	formatServiceDate,
-	toIsoDate,
-	parseIsoDate,
-} from "@/lib/dates";
+import { Text } from "@/components/ui/text";
 import { findOrCreateService } from "@/db/services";
-import { Plus } from "lucide-react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+	formatServiceDate,
+	parseIsoDate,
+	toIsoDate,
+	upcomingSunday,
+} from "@/lib/dates";
+import { SERVICE_LABELS } from "@/lib/presets";
 import { routes } from "@/lib/routes";
 
 export function NewServiceDialog() {
@@ -66,7 +66,7 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 	const [showPicker, setShowPicker] = useState(false);
 	const [saving, setSaving] = useState(false);
 
-	function handleDateChange(_, selected: Date) {
+	function handleDateChange(_: DateTimePickerChangeEvent, selected: Date) {
 		setShowPicker(false);
 		setServiceDate(toIsoDate(selected));
 	}
@@ -108,9 +108,7 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 						</SelectTrigger>
 						<SelectContent className="w-50">
 							{SERVICE_LABELS.map((l, i) => (
-								<SelectItem key={l} value={l} label={l} index={i}>
-									{l}
-								</SelectItem>
+								<SelectItem key={l} value={l} label={l} />
 							))}
 						</SelectContent>
 					</Select>

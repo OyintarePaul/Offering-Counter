@@ -1,8 +1,8 @@
-import { useMemo } from "react";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { asc, desc } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useMemo } from "react";
 import { db } from "./client";
-import { services, offerings, entries } from "./schema";
+import { entries, offerings, services } from "./schema";
 
 // Drizzle's live queries only refresh when their own table changes, so nested
 // relational queries miss changes to child rows. We subscribe to each table

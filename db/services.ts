@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "./client";
-import { services, offerings } from "./schema";
+import { offerings, services } from "./schema";
 
 // Returns the id of the existing service with this date and label,
 // or creates it. A new service copies offering names from the most recent

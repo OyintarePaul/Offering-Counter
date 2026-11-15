@@ -1,16 +1,16 @@
+import { Plus } from "lucide-react-native";
 import { useState } from "react";
 import { View } from "react-native";
+import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Text } from "@/components/ui/text";
 import { Icon } from "@/components/ui/icon";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -18,10 +18,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { DENOMINATIONS } from "@/lib/presets";
-import { formatNaira } from "@/lib/money";
+import { Text } from "@/components/ui/text";
 import { addDenomination } from "@/db/entries";
-import { Plus } from "lucide-react-native";
+import { formatNaira } from "@/lib/money";
+import { DENOMINATIONS } from "@/lib/presets";
 
 type Props = {
 	offeringId: number;
@@ -93,10 +93,7 @@ export function AddDenominationDialog({
 										key={d}
 										value={String(d)}
 										label={formatNaira(d)}
-										index={i}
-									>
-										{formatNaira(d)}
-									</SelectItem>
+									/>
 								))}
 							</SelectContent>
 						</Select>

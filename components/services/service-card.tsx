@@ -1,11 +1,11 @@
-import { View, Pressable } from "react-native";
 import { Link } from "expo-router";
+import { Pressable, View } from "react-native";
+import { DeleteServiceDialog } from "@/components/services/delete-service-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { formatNaira, grandTotal } from "@/lib/money";
-import { formatServiceDate } from "@/lib/dates";
-import { DeleteServiceDialog } from "@/components/services/delete-service-dialog";
 import type { useServiceTree } from "@/db/live";
+import { formatServiceDate } from "@/lib/dates";
+import { formatNaira, grandTotal } from "@/lib/money";
 import { routes } from "@/lib/routes";
 
 export type ServiceItem = ReturnType<typeof useServiceTree>["services"][number];

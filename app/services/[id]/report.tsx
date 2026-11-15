@@ -1,11 +1,11 @@
-import { useRef } from "react";
-import { router, Stack, useLocalSearchParams } from "expo-router";
 import { Asset, usePermissions } from "expo-media-library";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import * as Sharing from "expo-sharing";
+import { Download, Share2 } from "lucide-react-native";
+import { type ComponentRef, useRef } from "react";
 import { Alert, FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ViewShot, { captureRef } from "react-native-view-shot";
-import { Download, Share2 } from "lucide-react-native";
 import { CustomHeader } from "@/components/custom-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +14,7 @@ import { Text } from "@/components/ui/text";
 import { useServiceTree } from "@/db/live";
 import { useMutation } from "@/hooks/use-mutation";
 import { formatNaira } from "@/lib/money";
-import { buildReport, ReportModel } from "@/lib/report";
+import { buildReport, type ReportModel } from "@/lib/report";
 
 const TABULAR_NUMS = { fontVariant: ["tabular-nums"] as const };
 
@@ -25,7 +25,7 @@ export default function ReportScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const { services, ready } = useServiceTree();
 
-	const captureContainerRef = useRef<View>(null);
+	const captureContainerRef = useRef<ComponentRef<typeof ViewShot>>(null);
 	const [permissionResponse, requestPermission] = usePermissions({
 		granularPermissions: ["photo"],
 		writeOnly: true,
@@ -39,11 +39,7 @@ export default function ReportScreen() {
 			throw new Error("Report view is not ready.");
 		}
 
-		return captureRef(captureContainerRef, {
-			fileName: service.label,
-			format: "png",
-			quality: 1,
-		});
+		return captureContainerRef.current.capture();
 	}
 
 	const { mutate: handleSave, isPending: isSaving } = useMutation(async () => {
@@ -112,7 +108,7 @@ export default function ReportScreen() {
 	const hasOfferings = report.offerings.length > 0;
 	const isBusy = isSaving || isSharing;
 
-	const renderItem = ({ item: offering }: { item: CategoryItem }) => (
+	const renderItem = ({ item: offering }: { item: OfferingItem }) => (
 		<OfferingCard offering={offering} />
 	);
 
@@ -133,7 +129,7 @@ export default function ReportScreen() {
 				data={report.offerings}
 				keyExtractor={(item) => item.name}
 				ListHeaderComponent={
-					hasOfferings ? <ReportHeader report={report} /> : null
+					hasOfferings ? <ReportHeader report={report} /> : undefined
 				}
 				ListEmptyComponent={EmptyReport}
 				renderItem={renderItem}
@@ -147,7 +143,11 @@ export default function ReportScreen() {
 				>
 					<ViewShot
 						ref={captureContainerRef}
-						options={{ format: "png", quality: 1 }}
+						options={{
+							fileName: service?.label || "Report",
+							format: "png",
+							quality: 1,
+						}}
 					>
 						<View className="gap-4 bg-background p-5">
 							<ReportHeader report={report} />

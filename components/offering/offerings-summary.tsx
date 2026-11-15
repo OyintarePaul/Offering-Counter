@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { formatNaira, grandTotal } from "@/lib/money";
-import type { CategoryItem } from "./offering-card";
+import type { OfferingItem } from "./offering-card";
 
 type OfferingsSummaryProps = {
-	offerings: CategoryItem[];
+	offerings: OfferingItem[];
 };
 
 export function OfferingsSummary({ offerings }: OfferingsSummaryProps) {

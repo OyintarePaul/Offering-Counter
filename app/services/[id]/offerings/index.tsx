@@ -1,22 +1,22 @@
+import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Plus } from "lucide-react-native";
 import { useCallback, useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Stack, router, useLocalSearchParams } from "expo-router";
-import { useServiceTree } from "@/db/live";
-import { formatServiceDate } from "@/lib/dates";
-import { AddOfferingDialog } from "@/components/offering/add-offering-dialog";
-import { ViewReportBtn } from "@/components/offering/view-report-btn";
 import { CustomHeader } from "@/components/custom-header";
-import { Text } from "@/components/ui/text";
-import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
-import { Plus } from "lucide-react-native";
+import { AddOfferingDialog } from "@/components/offering/add-offering-dialog";
+import { EmptyOffering } from "@/components/offering/empty-offering";
 import {
 	OfferingCard,
 	type OfferingItem,
 } from "@/components/offering/offering-card";
-import { EmptyOffering } from "@/components/offering/empty-offering";
 import { OfferingsSummary } from "@/components/offering/offerings-summary";
+import { ViewReportBtn } from "@/components/offering/view-report-btn";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { useServiceTree } from "@/db/live";
+import { formatServiceDate } from "@/lib/dates";
 
 export default function OfferingsScreen() {
 	const insets = useSafeAreaInsets();
@@ -93,18 +93,18 @@ export default function OfferingsScreen() {
 				/>
 			)}
 
-            <View className="flex-row gap-3 px-4 pt-3">
-                <View className="flex-1">
-                    <Button variant="dashed" onPress={() => setAddOpen(true)}>
-                        <Icon as={Plus} className="size-4 text-primary" />
-                        <Text>Add Offering</Text>
-                    </Button>
-                </View>
+			<View className="flex-row gap-3 px-4 pt-3">
+				<View className="flex-1">
+					<Button variant="dashed" onPress={() => setAddOpen(true)}>
+						<Icon as={Plus} className="size-4 text-primary" />
+						<Text>Add Offering</Text>
+					</Button>
+				</View>
 
-                <View className="flex-1">
-    			     <ViewReportBtn serviceId={serviceId} />
-                </View>
-            </View>
+				<View className="flex-1">
+					<ViewReportBtn serviceId={serviceId} />
+				</View>
+			</View>
 		</View>
 	);
 }

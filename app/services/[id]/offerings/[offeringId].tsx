@@ -1,15 +1,17 @@
-import { Ref, useEffect, useRef, useState } from "react";
-import { Keyboard, FlatList, TextInput, View } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { type ComponentRef, Ref, useEffect, useRef, useState } from "react";
+import { FlatList, Keyboard, type TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useServiceTree } from "@/db/live";
-import { saveCount, removeDenomination } from "@/db/entries";
-import { categoryTotal, formatNaira } from "@/lib/money";
 import { CountRow } from "@/components/count-row";
+import { CustomHeader } from "@/components/custom-header";
 import { AddDenominationDialog } from "@/components/offering/add-denomination-dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { CustomHeader } from "@/components/custom-header";
+import { removeDenomination, saveCount } from "@/db/entries";
+import { useServiceTree } from "@/db/live";
+import { categoryTotal, formatNaira } from "@/lib/money";
+
+type TextInputInstance = ComponentRef<typeof TextInput>;
 
 export default function OfferingsDetailsScreen() {
 	const insets = useSafeAreaInsets();
@@ -26,7 +28,7 @@ export default function OfferingsDetailsScreen() {
 	const [addOpen, setAddOpen] = useState(false);
 	const [focusDenom, setFocusDenom] = useState<number | null>(null);
 	const [pendingRemove, setPendingRemove] = useState<number | null>(null);
-	const inputRefs = useRef<Record<number, TextInput | null>>({});
+	const inputRefs = useRef<Record<number, TextInputInstance | null>>({});
 	const listRef = useRef<FlatList>(null);
 	const rowY = useRef<Record<number, number>>({});
 
@@ -104,7 +106,7 @@ export default function OfferingsDetailsScreen() {
 				ListHeaderComponent={
 					<View className="p-4">
 						<Text className="text-muted-foreground">Running total</Text>
-						<Text className="text-3xl font-bold text-accent">
+						<Text className="text-3xl font-sans-bold text-accent">
 							{formatNaira(categoryTotal(offering.entries))}
 						</Text>
 					</View>
@@ -122,13 +124,6 @@ export default function OfferingsDetailsScreen() {
 						}}
 						onNext={() => focusNext(index)}
 						isLast={index === rows.length - 1}
-						onRemove={() => {
-							if (row.count > 0) {
-								setPendingRemove(row.denomination);
-							} else {
-								void removeDenomination(offeringId, row.denomination);
-							}
-						}}
 						onLayoutY={(y) => {
 							rowY.current[row.denomination] = y;
 						}}

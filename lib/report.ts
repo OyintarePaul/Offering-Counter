@@ -1,5 +1,5 @@
-import { rowTotal } from "./money";
 import { formatServiceDate } from "./dates";
+import { rowTotal } from "./money";
 
 export type EntryRow = { denomination: number; count: number };
 

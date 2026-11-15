@@ -2,17 +2,17 @@ import "@/global.css";
 import { PortalHost } from "@rn-primitives/portal";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { Stack } from "expo-router";
-import { useEffect } from "react";
 import { ThemeProvider } from "expo-router/react-navigation";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import * as SystemUI from "expo-system-ui";
+import { useEffect } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import { useUniwind } from "uniwind";
 import { db } from "@/db/client";
 import migrations from "@/drizzle/migrations";
-import { NAV_THEME } from "@/lib/theme";
-import * as SystemUI from "expo-system-ui";
 import { useLoadFonts } from "@/hooks/use-load-fonts";
-import * as SplashScreen from "expo-splash-screen";
+import { NAV_THEME } from "@/lib/theme";
 
 SplashScreen.preventAutoHideAsync();
 
