@@ -3,7 +3,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { Ionicon } from "@/components/ionicon";
+import { Icon } from "@/components/ui/icon";
+import { ChevronLeft } from "lucide-react-native";
+
 
 export function CustomHeader({
     subtitle,
@@ -21,7 +23,7 @@ export function CustomHeader({
         >
             {router.canGoBack() && (
                 <Button size="icon" variant="outline" onPress={() => router.back()}>
-                    <Ionicon name="chevron-back" size={18} />
+                    <Icon as={ChevronLeft} className="size-4" />
                 </Button>
             )}
             <View>

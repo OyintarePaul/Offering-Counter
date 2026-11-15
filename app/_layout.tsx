@@ -46,6 +46,9 @@ export default function RootLayout() {
 			<StatusBar style={resolvedTheme === "dark" ? "light" : "dark"} />
 			<Stack screenOptions={{
                 title: "",
+                animation: "fade_from_bottom",
+                headerShadowVisible: false,
+                headerBackVisible: false,
                 contentStyle: {
                     backgroundColor: NAV_THEME[resolvedTheme].colors.background
                 }

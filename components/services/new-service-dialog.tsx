@@ -31,7 +31,6 @@ import {
 	parseIsoDate,
 } from "@/lib/dates";
 import { findOrCreateService } from "@/db/services";
-import { Ionicon } from "@/components/ionicon";
 import { Plus } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -47,10 +46,10 @@ export function NewServiceDialog() {
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
 					<Button>
-						<Ionicon
-							name="add"
-							size={18}
-							colorClassName="accent-primary-foreground"
+						<Icon
+							as={Plus}
+                            className="size-4"
+
 						/>
 						<Text>New Service</Text>
 					</Button>

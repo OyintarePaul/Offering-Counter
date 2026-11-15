@@ -6,7 +6,7 @@ import { useServiceTree } from "@/db/live";
 import { saveCount, removeDenomination } from "@/db/entries";
 import { categoryTotal, formatNaira } from "@/lib/money";
 import { CountRow } from "@/components/count-row";
-import { AddDenominationDialog } from "@/components/add-denomination-dialog";
+import { AddDenominationDialog } from "@/components/category/add-denomination-dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { CustomHeader } from "@/components/custom-header";
