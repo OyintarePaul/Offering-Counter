@@ -32,7 +32,7 @@
 					"resizeMode": "contain",
 					"backgroundColor": "#f8fafc",
 					"dark": {
-						"image": "./assets/android-icon-foreground.png",
+						"image": "./assets/android-icon-monochrome.png",
 						"backgroundColor": "#0b1220"
 					}
 				}
