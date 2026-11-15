@@ -27,7 +27,7 @@ export function CustomHeader({
 			)}
 			<View>
 				{subtitle && (
-					<Text variant="muted" className="leading-none">
+					<Text variant="muted" className="">
 						{subtitle}
 					</Text>
 				)}

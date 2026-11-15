@@ -10,12 +10,10 @@ interface ViewReportBtnProps {
 
 export function ViewReportBtn({ serviceId }: ViewReportBtnProps) {
 	return (
-		<View className="px-4 pt-4">
-			<Link href={routes.report(serviceId)} asChild>
-				<Button>
-					<Text>View Report</Text>
-				</Button>
-			</Link>
-		</View>
+		<Link href={routes.report(serviceId)} asChild>
+			<Button className="flex-1">
+				<Text>View Report</Text>
+			</Button>
+		</Link>
 	);
 }

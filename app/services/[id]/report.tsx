@@ -118,7 +118,7 @@ export default function ReportScreen() {
 
 	return (
 		<View
-			style={{ paddingBottom: Math.max(insets.bottom, 30) }}
+			style={{ paddingBottom: Math.max(insets.bottom, 20) }}
 			className="flex-1 bg-background"
 		>
 			<Stack.Screen
@@ -164,7 +164,7 @@ export default function ReportScreen() {
 				<View className="flex-row gap-3 px-4 pt-2">
 					<Button
 						variant="outline"
-						className="flex-1 flex-row gap-2"
+						className="flex-1"
 						disabled={isBusy}
 						onPress={() => handleSave()}
 					>
@@ -173,7 +173,7 @@ export default function ReportScreen() {
 					</Button>
 
 					<Button
-						className="flex-1 flex-row gap-2"
+						className="flex-1"
 						disabled={isBusy}
 						onPress={() => handleShare()}
 					>

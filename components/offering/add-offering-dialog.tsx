@@ -69,7 +69,7 @@ export function AddOfferingDialog({
 						</Button>
 						<View>
 							<DialogTitle>Add Offering</DialogTitle>
-							<Text variant="muted">Add an offering offering</Text>
+							<Text variant="muted">Add an offering to count</Text>
 						</View>
 					</DialogHeader>
 

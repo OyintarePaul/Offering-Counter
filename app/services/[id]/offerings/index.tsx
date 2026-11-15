@@ -60,7 +60,7 @@ export default function OfferingsScreen() {
 
 	return (
 		<View
-			style={{ paddingBottom: Math.max(insets.bottom, 30) }}
+			style={{ paddingBottom: Math.max(insets.bottom, 20) }}
 			className="flex-1 bg-background"
 		>
 			<Stack.Screen
@@ -92,14 +92,19 @@ export default function OfferingsScreen() {
 					onClose={() => setAddOpen(false)}
 				/>
 			)}
-			<View className="px-4">
-				<Button variant="dashed" onPress={() => setAddOpen(true)}>
-					<Icon as={Plus} className="size-4 text-primary" />
-					<Text>Add Offering</Text>
-				</Button>
-			</View>
 
-			<ViewReportBtn serviceId={serviceId} />
+            <View className="flex-row gap-3 px-4 pt-3">
+                <View className="flex-1">
+                    <Button variant="dashed" onPress={() => setAddOpen(true)}>
+                        <Icon as={Plus} className="size-4 text-primary" />
+                        <Text>Add Offering</Text>
+                    </Button>
+                </View>
+
+                <View className="flex-1">
+    			     <ViewReportBtn serviceId={serviceId} />
+                </View>
+            </View>
 		</View>
 	);
 }

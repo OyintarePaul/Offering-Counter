@@ -32,7 +32,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
 						<DeleteServiceDialog serviceId={service.id} />
 					</CardHeader>
 					<CardContent className="flex-row items-center justify-between">
-						<Text variant="h4" className="text-accent">
+						<Text variant="h3" className="text-accent font-sans-bold">
 							{formatNaira(grandTotal(service.offerings))}
 						</Text>
 					</CardContent>

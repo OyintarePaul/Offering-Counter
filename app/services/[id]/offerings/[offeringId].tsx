@@ -81,7 +81,7 @@ export default function OfferingsDetailsScreen() {
 
 	return (
 		<View
-			style={{ paddingBottom: Math.max(insets.bottom, 30) }}
+			style={{ paddingBottom: Math.max(insets.bottom, 20) }}
 			className="flex-1 bg-background"
 		>
 			<Stack.Screen

@@ -32,7 +32,7 @@ export function OfferingCard({ offering, serviceId }: Props) {
 								{counted} denomination{counted === 1 ? "" : "s"} counted
 							</Text>
 						</View>
-						<Text variant="h4" className="text-accent">
+						<Text variant="h4" className="text-accent font-sans-bold">
 							{formatNaira(categoryTotal(offering.entries))}
 						</Text>
 

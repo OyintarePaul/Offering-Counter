@@ -41,7 +41,7 @@ export function NewServiceDialog() {
 
 	return (
 		<View
-			style={{ paddingBottom: Math.max(insets.bottom, 30) }}
+			style={{ paddingBottom: Math.max(insets.bottom, 20) }}
 			className="bg-background px-4 pt-3"
 		>
 			<Dialog open={open} onOpenChange={setOpen}>
