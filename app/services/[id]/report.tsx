@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import * as MediaLibrary from "expo-media-library";
+import { Asset, usePermissions } from "expo-media-library";
 import * as Sharing from "expo-sharing";
 import { Alert, FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,7 +18,7 @@ import { buildReport, ReportModel } from "@/lib/report";
 
 const TABULAR_NUMS = { fontVariant: ["tabular-nums"] as const };
 
-type CategoryItem = ReportModel["offerings"][number];
+type OfferingItem = ReportModel["offerings"][number];
 
 export default function ReportScreen() {
 	const insets = useSafeAreaInsets();
@@ -26,8 +26,9 @@ export default function ReportScreen() {
 	const { services, ready } = useServiceTree();
 
 	const captureContainerRef = useRef<View>(null);
-	const [permissionResponse, requestPermission] = MediaLibrary.usePermissions({
+	const [permissionResponse, requestPermission] = usePermissions({
 		granularPermissions: ["photo"],
+        writeOnly: true
 	});
 
 	const service = services.find((s) => s.id === Number(id));
@@ -39,27 +40,44 @@ export default function ReportScreen() {
 		}
 
 		return captureRef(captureContainerRef, {
-			fileName: service?.name,
+			fileName: service.label,
 			format: "png",
 			quality: 1,
 		});
 	}
 
 	const { mutate: handleSave, isPending: isSaving } = useMutation(async () => {
-		if (permissionResponse?.status !== "granted") {
-			const { granted } = await requestPermission();
-			if (!granted) {
-				Alert.alert(
-					"Permission required",
-					"Please allow photo library access to save the report.",
-				);
-				return;
-			}
-		}
+        try {
+            if (permissionResponse?.status !== "granted") {
+            const { granted } = await requestPermission();
+            if (!granted) {
+                Alert.alert(
+                    "Permission required",
+                    "Please allow photo library access to save the report.",
+                );
+                return;
+            }
+        }
 
-		const uri = await captureReportImage();
-		await MediaLibrary.saveToLibraryAsync(uri);
-		Alert.alert("Saved", "Report image saved to your gallery.");
+            const uri = await captureReportImage();
+            if (!uri) {
+                throw new Error("Failed to generate report image URL")
+            }
+
+            const localUri = uri.startsWith("file://") ? uri : `file://${uri}`;
+
+            await Asset.create(localUri);
+
+            Alert.alert("Saved", "Report image saved to your gallery.");
+        } catch (error) {
+            console.error("Failed to save report:", error);
+            Alert.alert(
+                "Save failed",
+                error instanceof Error
+                    ? error.message
+                    : "Could not save the report image to your gallery.",
+            );
+        }
 	});
 
 	const { mutate: handleShare, isPending: isSharing } = useMutation(
@@ -91,11 +109,11 @@ export default function ReportScreen() {
 	}
 
 	const report = buildReport(service);
-	const hasCategories = report.offerings.length > 0;
+	const hasOfferings = report.offerings.length > 0;
 	const isBusy = isSaving || isSharing;
 
 	const renderItem = ({ item: offering }: { item: CategoryItem }) => (
-		<CategoryCard offering={offering} />
+		<OfferingCard offering={offering} />
 	);
 
 	return (
@@ -115,14 +133,14 @@ export default function ReportScreen() {
 				data={report.offerings}
 				keyExtractor={(item) => item.name}
 				ListHeaderComponent={
-					hasCategories ? <ReportHeader report={report} /> : null
+					hasOfferings ? <ReportHeader report={report} /> : null
 				}
 				ListEmptyComponent={EmptyReport}
 				renderItem={renderItem}
 			/>
 
 			{/* Off-screen full-height view so long reports aren't cut off when captured */}
-			{hasCategories && (
+			{hasOfferings && (
 				<View
 					pointerEvents="none"
 					style={{ position: "absolute", left: -9999, top: 0, width: 400 }}
@@ -134,7 +152,7 @@ export default function ReportScreen() {
 						<View className="gap-4 bg-background p-5">
 							<ReportHeader report={report} />
 							{report.offerings.map((offering) => (
-								<CategoryCard key={offering.name} offering={offering} />
+								<OfferingCard key={offering.name} offering={offering} />
 							))}
 						</View>
 					</ViewShot>
@@ -142,7 +160,7 @@ export default function ReportScreen() {
 			)}
 
 			{/* Pinned bottom action bar */}
-			{hasCategories && (
+			{hasOfferings && (
 				<View className="flex-row gap-3 px-4 pt-2">
 					<Button
 						variant="outline"
@@ -168,7 +186,7 @@ export default function ReportScreen() {
 	);
 }
 
-function CategoryCard({ offering }: { offering: CategoryItem }) {
+function OfferingCard({ offering }: { offering: OfferingItem }) {
 	return (
 		<Card className="gap-3">
 			<CardHeader className="flex-row items-center justify-between">
