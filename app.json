@@ -1,46 +1,56 @@
 {
-    "expo": {
-        "name": "Offerings Counter",
-        "slug": "offerings-counter",
-        "scheme": "offerings-counter",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "userInterfaceStyle": "automatic",
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "package": "com.anonymous.offeringscounter",
-            "adaptiveIcon": {
-                "backgroundColor": "#E6F4FE",
-                "foregroundImage": "./assets/android-icon-foreground.png",
-                "backgroundImage": "./assets/android-icon-background.png",
-                "monochromeImage": "./assets/android-icon-monochrome.png"
-            },
-            "predictiveBackGestureEnabled": false
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
-        },
-        "plugins": [
-            [
-                "expo-splash-screen",
-                {
-                    "image": "./assets/android-icon-foreground.png",
-                    "imageWidth": 200,
-                    "resizeMode": "contain",
-                    "backgroundColor": "#f8fafc",
-                    "dark": {
-                        "image": "./assets/android-icon-foreground.png",
-                        "backgroundColor": "#0b1220"
-                    }
-                }
-            ],
-            "expo-router",
-            "expo-sqlite",
-            "@react-native-community/datetimepicker",
-            "expo-sharing"
-        ],
+  "expo": {
+    "name": "Offerings Counter",
+    "slug": "offerings-counter",
+    "scheme": "offerings-counter",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.devpaul.offeringscounter",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/android-icon-foreground.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#f8fafc",
+          "dark": {
+            "image": "./assets/android-icon-foreground.png",
+            "backgroundColor": "#0b1220"
+          }
+        }
+      ],
+      "expo-router",
+      "expo-sqlite",
+      "@react-native-community/datetimepicker",
+      "expo-sharing"
+    ],
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "e3454531-0f46-45d4-994b-c6cc77ecd036"
+      }
     }
+  }
 }
