@@ -4,17 +4,17 @@ import { Text } from "@/components/ui/text";
 import { formatNaira, grandTotal } from "@/lib/money";
 import type { CategoryItem } from "./offering-card";
 
-type ServiceSummaryProps = {
+type OfferingsSummaryProps = {
 	offerings: CategoryItem[];
 };
 
-export function OfferingsSummary({ offerings }: ServiceSummaryProps) {
+export function OfferingsSummary({ offerings }: OfferingsSummaryProps) {
 	return (
 		<Card className="bg-primary">
 			<CardContent className="gap-2">
 				<Text
 					variant="muted"
-					className="text-background font-semibold leading-none"
+					className="text-background leading-none"
 				>
 					Service total
 				</Text>

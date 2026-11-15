@@ -5,7 +5,7 @@ import { Text } from "@/components/ui/text";
 import { categoryTotal, formatNaira } from "@/lib/money";
 import type { useServiceTree } from "@/db/live";
 import { DeleteOfferingDialog } from "@/components/offering/delete-offering-dialog";
-import { routes } from "@/lib/routes"
+import { routes } from "@/lib/routes";
 
 export type OfferingItem = ReturnType<
 	typeof useServiceTree

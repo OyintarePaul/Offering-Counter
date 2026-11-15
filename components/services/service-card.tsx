@@ -6,7 +6,7 @@ import { formatNaira, grandTotal } from "@/lib/money";
 import { formatServiceDate } from "@/lib/dates";
 import { DeleteServiceDialog } from "@/components/services/delete-service-dialog";
 import type { useServiceTree } from "@/db/live";
-import { routes } from "@/lib/routes"
+import { routes } from "@/lib/routes";
 
 export type ServiceItem = ReturnType<typeof useServiceTree>["services"][number];
 

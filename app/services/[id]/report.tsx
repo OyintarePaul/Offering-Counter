@@ -39,7 +39,7 @@ export default function ReportScreen() {
 		}
 
 		return captureRef(captureContainerRef, {
-            fileName: service?.name,
+			fileName: service?.name,
 			format: "png",
 			quality: 1,
 		});
@@ -173,7 +173,7 @@ function CategoryCard({ offering }: { offering: CategoryItem }) {
 		<Card className="gap-3">
 			<CardHeader className="flex-row items-center justify-between">
 				<CardTitle>{offering.name}</CardTitle>
-				<Text className="font-semibold" style={TABULAR_NUMS}>
+				<Text className="font-sans-semibold" style={TABULAR_NUMS}>
 					{formatNaira(offering.total)}
 				</Text>
 			</CardHeader>
@@ -198,18 +198,20 @@ function CategoryCard({ offering }: { offering: CategoryItem }) {
 
 function ReportHeader({ report }: { report: ReportModel }) {
 	return (
-		<View className="rounded-xl bg-primary p-6">
-			<Text className="text-sm text-primary-foreground">
-				Grand total &bull; {report.serviceLabel}
-			</Text>
-			<Text
-				variant="h2"
-				className="font-extrabold text-primary-foreground"
-				style={TABULAR_NUMS}
-			>
-				{formatNaira(report.grandTotal)}
-			</Text>
-		</View>
+		<Card className="bg-primary">
+            <CardContent className="gap-2">
+            <Text className="text-sm text-primary-foreground">
+                Grand total &bull; {report.serviceLabel}
+            </Text>
+            <Text
+                variant="h1"
+                className="text-background leading-none"
+                style={TABULAR_NUMS}
+            >
+                {formatNaira(report.grandTotal)}
+            </Text>
+            </CardContent>
+		</Card>
 	);
 }
 

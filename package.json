@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
+    "@expo-google-fonts/dm-sans": "^0.4.2",
     "@react-native-community/datetimepicker": "9.2.1",
     "@rn-primitives/alert-dialog": "^1.5.2",
     "@rn-primitives/dialog": "^1.5.2",
@@ -14,6 +15,7 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.4",
     "expo": "~58.0.25",
+    "expo-font": "~58.0.12",
     "expo-haptics": "~58.0.8",
     "expo-linking": "~58.0.17",
     "expo-media-library": "~58.0.14",

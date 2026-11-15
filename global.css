@@ -4,6 +4,12 @@
 @layer theme {
 	:root {
 		@variant light {
+            /* Fonts */
+            --font-sans: "DMSans_400Regular";
+            --font-sans-semibold: "DMSans_600SemiBold";
+            --font-sans-bold: "DMSans_700Bold";
+            --font-sans-extrabold: "DMSans_800ExtraBold";
+
 			/* Surfaces */
 			--color-background: #f8fafc;
 			--color-foreground: #0f172a;
@@ -46,6 +52,12 @@
 		}
 
 		@variant dark {
+            /* Fonts */
+            --font-sans: "DMSans_400Regular";
+            --font-sans-semibold: "DMSans_600SemiBold";
+            --font-sans-bold: "DMSans_700Bold";
+            --font-sans-extrabold: "DMSans_800ExtraBold";
+
 			--color-background: #0b1220;
 			--color-foreground: #f8fafc;
 			--color-card: #111b2e;

@@ -11,17 +11,27 @@ import { db } from "@/db/client";
 import migrations from "@/drizzle/migrations";
 import { NAV_THEME } from "@/lib/theme";
 import * as SystemUI from "expo-system-ui";
+import { useLoadFonts } from "@/hooks/use-load-fonts";
+import * as SplashScreen from "expo-splash-screen"
+
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-	const { theme } = useUniwind();
+	const [fontsLoaded, fontsError] = useLoadFonts();
+    const { theme } = useUniwind();
+
 	const resolvedTheme = theme === "dark" ? "dark" : "light";
 	const { success, error } = useMigrations(db, migrations);
 
+	useEffect(() => {
+		SystemUI.setBackgroundColorAsync(
+			NAV_THEME[resolvedTheme].colors.background,
+		);
+	}, [resolvedTheme]);
+
     useEffect(() => {
-        SystemUI.setBackgroundColorAsync(
-        NAV_THEME[resolvedTheme].colors.background
-    );
-}, [resolvedTheme]);
+        if (fontsLoaded || fontsError) SplashScreen.hideAsync()
+    }, [fontsLoaded, fontsError])
 
 	if (error) {
 		return (
@@ -44,15 +54,17 @@ export default function RootLayout() {
 	return (
 		<ThemeProvider value={NAV_THEME[resolvedTheme]}>
 			<StatusBar style={resolvedTheme === "dark" ? "light" : "dark"} />
-			<Stack screenOptions={{
-                title: "",
-                animation: "fade_from_bottom",
-                headerShadowVisible: false,
-                headerBackVisible: false,
-                contentStyle: {
-                    backgroundColor: NAV_THEME[resolvedTheme].colors.background
-                }
-            }}/>
+			<Stack
+				screenOptions={{
+					title: "",
+					animation: "fade_from_bottom",
+					headerShadowVisible: false,
+					headerBackVisible: false,
+					contentStyle: {
+						backgroundColor: NAV_THEME[resolvedTheme].colors.background,
+					},
+				}}
+			/>
 			<PortalHost />
 		</ThemeProvider>
 	);

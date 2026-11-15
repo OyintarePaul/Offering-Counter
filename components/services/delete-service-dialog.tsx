@@ -47,24 +47,22 @@ export function DeleteServiceDialog({ serviceId }: DeleteServiceDialogProps) {
 					size="icon"
 					onPress={(e) => e.stopPropagation()}
 				>
-					<Icon as={Trash} className="size-4"/>
-
+					<Icon as={Trash} className="size-4" />
 				</Button>
 			</AlertDialogTrigger>
 
 			<AlertDialogContent>
 				<AlertDialogHeader>
-                    <Button
-                        variant="destructive-soft"
-                        size="icon"
-                        onPress={(e) => e.stopPropagation()}
-                    >
-                        <Icon as={Trash} className="size-4" />
-                    </Button>
+					<Button
+						variant="destructive-soft"
+						size="icon"
+						onPress={(e) => e.stopPropagation()}
+					>
+						<Icon as={Trash} className="size-4" />
+					</Button>
 					<AlertDialogTitle>Delete this service?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Its offerings and counts will be removed. This can&apos;t be
-						undone.
+						Its offerings and counts will be removed. This can&apos;t be undone.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter className="flex-row gap-2">

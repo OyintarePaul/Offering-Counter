@@ -33,7 +33,7 @@ import {
 import { findOrCreateService } from "@/db/services";
 import { Plus } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { routes } from "@/lib/routes"
+import { routes } from "@/lib/routes";
 
 export function NewServiceDialog() {
 	const insets = useSafeAreaInsets();
@@ -47,11 +47,7 @@ export function NewServiceDialog() {
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
 					<Button>
-						<Icon
-							as={Plus}
-                            className="size-4"
-
-						/>
+						<Icon as={Plus} className="size-4" />
 						<Text>New Service</Text>
 					</Button>
 				</DialogTrigger>
@@ -80,7 +76,7 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 		try {
 			const id = await findOrCreateService(serviceDate, label);
 			onClose();
-			router.push(routes.offerings(id))
+			router.push(routes.offerings(id));
 		} finally {
 			setSaving(false);
 		}
@@ -137,7 +133,7 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 							mode="date"
 							display="default"
 							onValueChange={handleDateChange}
-                            onDismiss={() => setShowPicker(false)}
+							onDismiss={() => setShowPicker(false)}
 						/>
 					)}
 				</View>
