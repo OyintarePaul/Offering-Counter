@@ -1,64 +1,64 @@
 {
-	"name": "Offerings Counter",
-	"version": "1.0.0",
-	"main": "expo-router/entry",
-	"dependencies": {
-		"@react-native-community/datetimepicker": "9.2.1",
-		"@react-native-vector-icons/ionicons": "^14.0.0",
-		"@rn-primitives/alert-dialog": "^1.5.2",
-		"@rn-primitives/dialog": "^1.5.2",
-		"@rn-primitives/label": "^1.5.2",
-		"@rn-primitives/portal": "^1.5.3",
-		"@rn-primitives/select": "^1.5.2",
-		"@rn-primitives/slot": "^1.5.2",
-		"class-variance-authority": "^0.7.1",
-		"clsx": "^2.1.1",
-		"drizzle-orm": "^0.45.4",
-		"expo": "~58.0.25",
-		"expo-haptics": "~58.0.8",
-		"expo-linking": "~58.0.17",
-		"expo-media-library": "~58.0.14",
-		"expo-router": "~58.0.31",
-		"expo-sharing": "~58.0.23",
-		"expo-sqlite": "~58.0.17",
-		"expo-status-bar": "~58.0.5",
-		"expo-system-ui": "~58.0.7",
-		"lucide-react-native": "^1.72.0",
-		"react": "^19.3.1",
-		"react-native": "^0.88.1",
-		"react-native-reanimated": "4.7.1",
-		"react-native-safe-area-context": "~5.11.1",
-		"react-native-screens": "~4.30.1",
-		"react-native-view-shot": "6.1.1",
-		"tailwind-merge": "^3.7.0",
-		"tailwindcss": "^4.3.3",
-		"tailwindcss-animate": "^1.0.7",
-		"uniwind": "^1.13.2"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
-		"@types/react": "~19.3.0",
-		"babel-plugin-inline-import": "^3.0.0",
-		"drizzle-kit": "^0.31.11",
-		"typescript": "~6.0.3"
-	},
-	"scripts": {
-		"start": "expo start",
-		"android": "expo start --android",
-		"ios": "expo start --ios",
-		"web": "expo start --web"
-	},
-	"private": true,
-	"overrides": {
-		"@babel/traverse": "7.29.10",
-		"@babel/types": "7.29.8",
-		"@babel/helper-create-class-features-plugin": "7.29.7",
-		"@babel/core": "7.29.7",
-		"@babel/helper-skip-transparent-expression-wrappers": "7.29.7"
-	},
-	"allowScripts": {
-		"esbuild@0.18.20": true,
-		"esbuild@0.25.12": true,
-		"esbuild@0.28.2": true
-	}
+  "name": "Offerings Counter",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "dependencies": {
+    "@react-native-community/datetimepicker": "9.2.1",
+    "@react-native-vector-icons/ionicons": "^14.0.0",
+    "@rn-primitives/alert-dialog": "^1.5.2",
+    "@rn-primitives/dialog": "^1.5.2",
+    "@rn-primitives/label": "^1.5.2",
+    "@rn-primitives/portal": "^1.5.3",
+    "@rn-primitives/select": "^1.5.2",
+    "@rn-primitives/slot": "^1.5.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.4",
+    "expo": "~58.0.25",
+    "expo-haptics": "~58.0.8",
+    "expo-linking": "~58.0.17",
+    "expo-media-library": "~58.0.14",
+    "expo-router": "~58.0.31",
+    "expo-sharing": "~58.0.23",
+    "expo-sqlite": "~58.0.17",
+    "expo-status-bar": "~58.0.5",
+    "expo-system-ui": "~58.0.7",
+    "lucide-react-native": "^1.72.0",
+    "react": "^19.3.1",
+    "react-native": "^0.88.1",
+    "react-native-reanimated": "4.7.1",
+    "react-native-safe-area-context": "~5.11.1",
+    "react-native-screens": "~4.30.1",
+    "react-native-view-shot": "6.1.1",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "tailwindcss-animate": "^1.0.7",
+    "uniwind": "^1.13.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/react": "~19.3.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "drizzle-kit": "^0.31.11",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "private": true,
+  "overrides": {
+    "@babel/traverse": "7.29.10",
+    "@babel/types": "7.29.8",
+    "@babel/helper-create-class-features-plugin": "7.29.7",
+    "@babel/core": "7.29.7",
+    "@babel/helper-skip-transparent-expression-wrappers": "7.29.7"
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  }
 }
