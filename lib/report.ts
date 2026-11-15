@@ -12,13 +12,13 @@ export type CategoryWithEntries = {
 export type ServiceWithCategories = {
 	serviceDate: string;
 	label: string;
-	categories: CategoryWithEntries[];
+	offerings: CategoryWithEntries[];
 };
 
 export type ReportModel = {
 	dateLabel: string;
 	serviceLabel: string;
-	categories: {
+	offerings: {
 		name: string;
 		total: number;
 		rows: { denomination: number; count: number; amount: number }[];
@@ -26,10 +26,10 @@ export type ReportModel = {
 	grandTotal: number;
 };
 
-// Drops zero-count rows and empty categories, sorts largest denomination first,
+// Drops zero-count rows and empty offerings, sorts largest denomination first,
 // and computes every total. The report screen renders this as-is.
 export function buildReport(service: ServiceWithCategories): ReportModel {
-	const categories = [...service.categories]
+	const offerings = [...service.offerings]
 		.sort((a, b) => a.position - b.position)
 		.map((cat) => {
 			const rows = cat.entries
@@ -51,7 +51,7 @@ export function buildReport(service: ServiceWithCategories): ReportModel {
 	return {
 		dateLabel: formatServiceDate(service.serviceDate),
 		serviceLabel: service.label,
-		categories,
-		grandTotal: categories.reduce((sum, c) => sum + c.total, 0),
+		offerings,
+		grandTotal: offerings.reduce((sum, c) => sum + c.total, 0),
 	};
 }

@@ -18,11 +18,11 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface Props {
-    categoryId: number;
+    offeringId: number;
     denomination: number;
 }
 
-export function DeleteDenominationDialog({ categoryId, denomination }: Props) {
+export function DeleteDenominationDialog({ offeringId, denomination }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +30,7 @@ export function DeleteDenominationDialog({ categoryId, denomination }: Props) {
         setIsLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            await removeDenomination(categoryId, denomination);
+            await removeDenomination(offeringId, denomination);
             setIsOpen(false);
         } finally {
             setIsLoading(false);

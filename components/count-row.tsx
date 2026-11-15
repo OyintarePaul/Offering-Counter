@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { formatNaira, rowTotal } from "@/lib/money";
 import { Plus, Minus, Trash } from "lucide-react-native";
-import { DeleteDenominationDialog } from "@/components/category/delete-denomination-dialog";
+import { DeleteDenominationDialog } from "@/components/offering/delete-denomination-dialog";
 
 // Turns typed text into a count. Empty or non-numeric text counts as 0.
 export function parseCount(text: string): number {
@@ -15,7 +15,7 @@ export function parseCount(text: string): number {
 }
 
 type Props = {
-    categoryId: number;
+    offeringId: number;
     denomination: number;
     count: number;
     inputRef: (el: TextInput | null) => void;
@@ -28,7 +28,7 @@ type Props = {
 };
 
 export function CountRow({
-    categoryId,
+    offeringId,
     denomination,
     count,
     inputRef,
@@ -109,7 +109,7 @@ export function CountRow({
 
                     <DeleteDenominationDialog
                         denomination={denomination}
-                        categoryId={categoryId}
+                        offeringId={offeringId}
                     />
                 </CardContent>
             </Card>

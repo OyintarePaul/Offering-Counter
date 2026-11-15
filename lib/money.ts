@@ -9,9 +9,9 @@ export function categoryTotal(
 }
 
 export function grandTotal(
-	categories: { entries: { denomination: number; count: number }[] }[],
+	offerings: { entries: { denomination: number; count: number }[] }[],
 ): number {
-	return categories.reduce((sum, c) => sum + categoryTotal(c.entries), 0);
+	return offerings.reduce((sum, c) => sum + categoryTotal(c.entries), 0);
 }
 
 // Adds commas by regex instead of toLocaleString, which Hermes doesn't handle reliably.

@@ -6,7 +6,7 @@ A simple app for counting church offerings. Pick a service, add categories such 
 
 - Create a service with the upcoming Sunday prefilled
 - Add offering categories and naira denominations
-- Totals update live for each denomination, category, and service
+- Totals update live for each denomination, offering, and service
 - Confirmation before deleting services, categories, or counted denominations
 - Read-only report, laid out for copying by hand
 - Data is saved locally and survives app restarts

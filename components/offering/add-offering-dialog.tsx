@@ -20,7 +20,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY_NAMES } from "@/lib/presets";
-import { addCategory } from "@/db/categories";
+import { addOffering } from "@/db/offerings";
 import { Plus } from "lucide-react-native";
 
 type Props = {
@@ -31,7 +31,7 @@ type Props = {
 };
 
 // Mounted only while open, so each opening starts fresh.
-export function AddCategoryDialog({
+export function AddOfferingDialog({
     serviceId,
     existingNames,
     nextPosition,
@@ -47,7 +47,7 @@ export function AddCategoryDialog({
         if (!selected) return;
         setSaving(true);
         try {
-            await addCategory(serviceId, selected, nextPosition);
+            await addOffering(serviceId, selected, nextPosition);
             onClose();
         } finally {
             setSaving(false);
@@ -68,18 +68,18 @@ export function AddCategoryDialog({
                             <Icon as={Plus} className="text-primary" />
                         </Button>
                         <View>
-                            <DialogTitle>Add Category</DialogTitle>
-                            <Text variant="muted">Add an offering category</Text>
+                            <DialogTitle>Add Offering</DialogTitle>
+                            <Text variant="muted">Add an offering offering</Text>
                         </View>
                     </DialogHeader>
 
                     {options.length === 0 ? (
                         <Text className="text-muted-foreground">
-                            Every category is already added.
+                            Every offering is already added.
                         </Text>
                     ) : (
                         <View className="gap-2">
-                            <Label>Category</Label>
+                            <Label>Offering</Label>
                             <Select
                                 value={{ value: selected, label: selected }}
                                 onValueChange={(option) => {
@@ -87,7 +87,7 @@ export function AddCategoryDialog({
                                 }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Choose a category" />
+                                    <SelectValue placeholder="Choose a offering" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {options.map((name, i) => (
@@ -113,7 +113,7 @@ export function AddCategoryDialog({
                                 disabled={saving || !selected}
                                 className="flex-1"
                             >
-                                <Text>{saving ? "Saving..." : "Add Category"}</Text>
+                                <Text>{saving ? "Saving..." : "Add Offering"}</Text>
                             </Button>
                         )}
                     </DialogFooter>

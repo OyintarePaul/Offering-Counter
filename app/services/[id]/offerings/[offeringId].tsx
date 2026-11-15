@@ -6,20 +6,19 @@ import { useServiceTree } from "@/db/live";
 import { saveCount, removeDenomination } from "@/db/entries";
 import { categoryTotal, formatNaira } from "@/lib/money";
 import { CountRow } from "@/components/count-row";
-import { AddDenominationDialog } from "@/components/category/add-denomination-dialog";
+import { AddDenominationDialog } from "@/components/offering/add-denomination-dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { CustomHeader } from "@/components/custom-header";
 
-export default function CategoryScreen() {
+export default function OfferingsDetailsScreen() {
     const insets = useSafeAreaInsets();
-    const { id, catId } = useLocalSearchParams<{ id: string; catId: string }>();
+    const { id, offeringId: offId } = useLocalSearchParams<{ id: string; offeringId: string }>();
     const serviceId = Number(id);
-    const categoryId = Number(catId);
-
+    const offeringId = Number(offId);
     const { services: list, ready } = useServiceTree();
     const service = list.find((s) => s.id === serviceId);
-    const category = service?.categories.find((c) => c.id === categoryId);
+    const offering = service?.offerings.find((c) => c.id === offeringId);
 
     const [addOpen, setAddOpen] = useState(false);
     const [focusDenom, setFocusDenom] = useState<number | null>(null);
@@ -29,14 +28,13 @@ export default function CategoryScreen() {
     const rowY = useRef<Record<number, number>>({});
 
     // Largest denominations first.
-    const rows = category
-        ? [...category.entries].sort((a, b) => b.denomination - a.denomination)
+    const rows = offering
+        ? [...offering.entries].sort((a, b) => b.denomination - a.denomination)
         : [];
 
     // After adding a denomination, move the cursor to its new input.
     useEffect(() => {
         if (focusDenom !== null && inputRefs.current[focusDenom]) {
-            console.log("");
             inputRefs.current[focusDenom]?.focus();
             setFocusDenom(null);
         }
@@ -62,7 +60,7 @@ export default function CategoryScreen() {
 
     async function confirmRemove() {
         if (pendingRemove === null) return;
-        await removeDenomination(categoryId, pendingRemove);
+        await removeDenomination(offeringId, pendingRemove);
         setPendingRemove(null);
     }
 
@@ -70,10 +68,10 @@ export default function CategoryScreen() {
         return <View className="flex-1 bg-background" />;
     }
 
-    if (!service || !category) {
+    if (!service || !offering) {
         return (
             <View className="flex-1 items-center justify-center bg-background">
-                <Text className="text-muted-foreground">Category not found.</Text>
+                <Text className="text-muted-foreground">Offering not found.</Text>
             </View>
         );
     }
@@ -84,7 +82,7 @@ export default function CategoryScreen() {
             className="flex-1 bg-background"
         >
             <Stack.Screen
-                options={{ header: () => <CustomHeader title={category.name} /> }}
+                options={{ header: () => <CustomHeader title={offering.name} /> }}
             />
 
             <FlatList
@@ -104,20 +102,20 @@ export default function CategoryScreen() {
                     <View className="p-4">
                         <Text className="text-muted-foreground">Running total</Text>
                         <Text className="text-3xl font-bold text-accent">
-                            {formatNaira(categoryTotal(category.entries))}
+                            {formatNaira(categoryTotal(offering.entries))}
                         </Text>
                     </View>
                 }
                 renderItem={({ item: row, index }) => (
                     <CountRow
-                        categoryId={categoryId}
+                        offeringId={offeringId}
                         denomination={row.denomination}
                         count={row.count}
                         inputRef={(el) => {
                             inputRefs.current[row.denomination] = el;
                         }}
                         onChangeCount={(n) => {
-                            void saveCount(categoryId, row.denomination, n);
+                            void saveCount(offeringId, row.denomination, n);
                         }}
                         onNext={() => focusNext(index)}
                         isLast={index === rows.length - 1}
@@ -125,7 +123,7 @@ export default function CategoryScreen() {
                             if (row.count > 0) {
                                 setPendingRemove(row.denomination);
                             } else {
-                                void removeDenomination(categoryId, row.denomination);
+                                void removeDenomination(offeringId, row.denomination);
                             }
                         }}
                         onLayoutY={(y) => {
@@ -144,7 +142,7 @@ export default function CategoryScreen() {
 
             {addOpen && (
                 <AddDenominationDialog
-                    categoryId={categoryId}
+                    offeringId={offeringId}
                     existing={rows.map((r) => r.denomination)}
                     onAdded={(d) => setFocusDenom(d)}
                     onClose={() => setAddOpen(false)}

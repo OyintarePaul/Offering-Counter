@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { formatNaira, grandTotal } from "@/lib/money";
-import type { CategoryItem } from "./category-card";
+import type { CategoryItem } from "./offering-card";
 
 type ServiceSummaryProps = {
-	categories: CategoryItem[];
+	offerings: CategoryItem[];
 };
 
-export function ServiceSummary({ categories }: ServiceSummaryProps) {
+export function OfferingsSummary({ offerings }: ServiceSummaryProps) {
 	return (
 		<Card className="bg-primary">
 			<CardContent className="gap-2">
@@ -19,7 +19,7 @@ export function ServiceSummary({ categories }: ServiceSummaryProps) {
 					Service total
 				</Text>
 				<Text variant="h1" className="text-background leading-none">
-					{formatNaira(grandTotal(categories))}
+					{formatNaira(grandTotal(offerings))}
 				</Text>
 			</CardContent>
 		</Card>

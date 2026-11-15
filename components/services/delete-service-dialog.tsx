@@ -63,7 +63,7 @@ export function DeleteServiceDialog({ serviceId }: DeleteServiceDialogProps) {
                     </Button>
 					<AlertDialogTitle>Delete this service?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Its categories and counts will be removed. This can&apos;t be
+						Its offerings and counts will be removed. This can&apos;t be
 						undone.
 					</AlertDialogDescription>
 				</AlertDialogHeader>

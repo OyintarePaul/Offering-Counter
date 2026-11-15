@@ -6,6 +6,7 @@ import { formatNaira, grandTotal } from "@/lib/money";
 import { formatServiceDate } from "@/lib/dates";
 import { DeleteServiceDialog } from "@/components/services/delete-service-dialog";
 import type { useServiceTree } from "@/db/live";
+import { routes } from "@/lib/routes"
 
 export type ServiceItem = ReturnType<typeof useServiceTree>["services"][number];
 
@@ -14,10 +15,10 @@ type ServiceCardProps = {
 };
 
 export function ServiceCard({ service }: ServiceCardProps) {
-	const categoryCount = service.categories.length;
+	const offeringCount = service.offerings.length;
 
 	return (
-		<Link href={`service/${service.id}`} asChild>
+		<Link href={routes.offerings(service.id)} asChild>
 			<Pressable>
 				<Card>
 					<CardHeader className="flex-row justify-between items-center gap-2">
@@ -26,13 +27,13 @@ export function ServiceCard({ service }: ServiceCardProps) {
 							<Text variant="h4">{formatServiceDate(service.serviceDate)}</Text>
 						</View>
 						<Text variant="muted" className="text-muted-foreground">
-							{categoryCount} {categoryCount === 1 ? "offering" : "offerings"}
+							{offeringCount} {offeringCount === 1 ? "offering" : "offerings"}
 						</Text>
 						<DeleteServiceDialog serviceId={service.id} />
 					</CardHeader>
 					<CardContent className="flex-row items-center justify-between">
 						<Text variant="h4" className="text-accent">
-							{formatNaira(grandTotal(service.categories))}
+							{formatNaira(grandTotal(service.offerings))}
 						</Text>
 					</CardContent>
 				</Card>

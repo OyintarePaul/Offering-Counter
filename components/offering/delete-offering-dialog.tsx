@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteCategory } from "@/db/categories";
+import { deleteOffering } from "@/db/offerings";
 import { Text } from "@/components/ui/text";
 import { Icon } from "@/components/ui/icon";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -16,22 +16,22 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-type DeleteCategoryDialogProps = {
-	categoryId: number | null;
+type DeleteOfferingDialogProps = {
+	offeringId: number | null;
 };
 
-export function DeleteCategoryDialog({
-	categoryId,
+export function DeleteOfferingDialog({
+	offeringId,
 }: DeleteCategoryDialogProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
 	async function handleConfirm() {
-		if (categoryId === null) return;
+		if (offeringId === null) return;
 
 		try {
 			setIsLoading(true);
-			await deleteCategory(categoryId);
+			await deleteOffering(offeringId);
 			setIsOpen(false);
 		} finally {
 			setIsLoading(false);
@@ -58,7 +58,7 @@ export function DeleteCategoryDialog({
 					>
 						<Icon as={Trash} className="size-4" />
 					</Button>
-					<AlertDialogTitle>Remove this category?</AlertDialogTitle>
+					<AlertDialogTitle>Remove this offering?</AlertDialogTitle>
 					<AlertDialogDescription>
 						All counts in it will be deleted. This can&apos;t be undone.
 					</AlertDialogDescription>

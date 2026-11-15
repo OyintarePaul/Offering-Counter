@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { asc, desc } from "drizzle-orm";
 import { db } from "./client";
-import { services, categories, entries } from "./schema";
+import { services, offerings, entries } from "./schema";
 
 // Drizzle's live queries only refresh when their own table changes, so nested
 // relational queries miss changes to child rows. We subscribe to each table
@@ -15,7 +15,7 @@ export function useServiceTree() {
 			.orderBy(desc(services.serviceDate), desc(services.createdAt)),
 	);
 	const cats = useLiveQuery(
-		db.select().from(categories).orderBy(asc(categories.position)),
+		db.select().from(offerings).orderBy(asc(offerings.position)),
 	);
 	const ents = useLiveQuery(db.select().from(entries));
 
@@ -28,11 +28,11 @@ export function useServiceTree() {
 		() =>
 			svc.data.map((s) => ({
 				...s,
-				categories: cats.data
+				offerings: cats.data
 					.filter((c) => c.serviceId === s.id)
 					.map((c) => ({
 						...c,
-						entries: ents.data.filter((e) => e.categoryId === c.id),
+						entries: ents.data.filter((e) => e.offeringId === c.id),
 					})),
 			})),
 		[svc.data, cats.data, ents.data],

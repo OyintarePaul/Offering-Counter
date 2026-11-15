@@ -18,8 +18,8 @@ export const services = sqliteTable(
 	(t) => [unique().on(t.serviceDate, t.label)],
 );
 
-export const categories = sqliteTable(
-	"categories",
+export const offerings = sqliteTable(
+	"offerings",
 	{
 		id: integer("id").primaryKey({ autoIncrement: true }),
 		serviceId: integer("service_id")
@@ -34,30 +34,30 @@ export const categories = sqliteTable(
 export const entries = sqliteTable(
 	"entries",
 	{
-		categoryId: integer("category_id")
+		offeringId: integer("offering_id")
 			.notNull()
-			.references(() => categories.id, { onDelete: "cascade" }),
+			.references(() => offerings.id, { onDelete: "cascade" }),
 		denomination: integer("denomination").notNull(),
 		count: integer("count").notNull().default(0),
 	},
-	(t) => [primaryKey({ columns: [t.categoryId, t.denomination] })],
+	(t) => [primaryKey({ columns: [t.offeringId, t.denomination] })],
 );
 
 export const servicesRelations = relations(services, ({ many }) => ({
-	categories: many(categories),
+	offerings: many(offerings),
 }));
 
-export const categoriesRelations = relations(categories, ({ one, many }) => ({
+export const categoriesRelations = relations(offerings, ({ one, many }) => ({
 	service: one(services, {
-		fields: [categories.serviceId],
+		fields: [offerings.serviceId],
 		references: [services.id],
 	}),
 	entries: many(entries),
 }));
 
 export const entriesRelations = relations(entries, ({ one }) => ({
-	category: one(categories, {
-		fields: [entries.categoryId],
-		references: [categories.id],
+	offering: one(offerings, {
+		fields: [entries.offeringId],
+		references: [offerings.id],
 	}),
 }));

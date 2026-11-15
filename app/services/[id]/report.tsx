@@ -18,7 +18,7 @@ import { buildReport, ReportModel } from "@/lib/report";
 
 const TABULAR_NUMS = { fontVariant: ["tabular-nums"] as const };
 
-type CategoryItem = ReportModel["categories"][number];
+type CategoryItem = ReportModel["offerings"][number];
 
 export default function ReportScreen() {
 	const insets = useSafeAreaInsets();
@@ -91,11 +91,11 @@ export default function ReportScreen() {
 	}
 
 	const report = buildReport(service);
-	const hasCategories = report.categories.length > 0;
+	const hasCategories = report.offerings.length > 0;
 	const isBusy = isSaving || isSharing;
 
-	const renderItem = ({ item: category }: { item: CategoryItem }) => (
-		<CategoryCard category={category} />
+	const renderItem = ({ item: offering }: { item: CategoryItem }) => (
+		<CategoryCard offering={offering} />
 	);
 
 	return (
@@ -112,7 +112,7 @@ export default function ReportScreen() {
 				className="flex-1"
 				contentContainerClassName="gap-4 p-4"
 				showsVerticalScrollIndicator={false}
-				data={report.categories}
+				data={report.offerings}
 				keyExtractor={(item) => item.name}
 				ListHeaderComponent={
 					hasCategories ? <ReportHeader report={report} /> : null
@@ -133,8 +133,8 @@ export default function ReportScreen() {
 					>
 						<View className="gap-4 bg-background p-5">
 							<ReportHeader report={report} />
-							{report.categories.map((category) => (
-								<CategoryCard key={category.name} category={category} />
+							{report.offerings.map((offering) => (
+								<CategoryCard key={offering.name} offering={offering} />
 							))}
 						</View>
 					</ViewShot>
@@ -168,17 +168,17 @@ export default function ReportScreen() {
 	);
 }
 
-function CategoryCard({ category }: { category: CategoryItem }) {
+function CategoryCard({ offering }: { offering: CategoryItem }) {
 	return (
 		<Card className="gap-3">
 			<CardHeader className="flex-row items-center justify-between">
-				<CardTitle>{category.name}</CardTitle>
+				<CardTitle>{offering.name}</CardTitle>
 				<Text className="font-semibold" style={TABULAR_NUMS}>
-					{formatNaira(category.total)}
+					{formatNaira(offering.total)}
 				</Text>
 			</CardHeader>
 			<CardContent className="gap-1.5">
-				{category.rows.map((row) => (
+				{offering.rows.map((row) => (
 					<View
 						key={row.denomination}
 						className="flex-row items-center justify-between"

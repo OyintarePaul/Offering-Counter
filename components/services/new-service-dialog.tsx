@@ -33,6 +33,7 @@ import {
 import { findOrCreateService } from "@/db/services";
 import { Plus } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { routes } from "@/lib/routes"
 
 export function NewServiceDialog() {
 	const insets = useSafeAreaInsets();
@@ -79,7 +80,7 @@ function NewServiceForm({ onClose }: { onClose: () => void }) {
 		try {
 			const id = await findOrCreateService(serviceDate, label);
 			onClose();
-			router.push({ pathname: "/service/[id]", params: { id: String(id) } });
+			router.push(routes.offerings(id))
 		} finally {
 			setSaving(false);
 		}

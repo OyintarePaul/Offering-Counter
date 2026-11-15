@@ -24,7 +24,7 @@ import { addDenomination } from "@/db/entries";
 import { Plus } from "lucide-react-native";
 
 type Props = {
-	categoryId: number;
+	offeringId: number;
 	existing: number[];
 	onAdded: (denomination: number) => void;
 	onClose: () => void;
@@ -32,7 +32,7 @@ type Props = {
 
 // Mounted only while open, so each opening starts fresh.
 export function AddDenominationDialog({
-	categoryId,
+	offeringId,
 	existing,
 	onAdded,
 	onClose,
@@ -45,7 +45,7 @@ export function AddDenominationDialog({
 		if (options.length === 0) return;
 		setSaving(true);
 		try {
-			await addDenomination(categoryId, selected);
+			await addDenomination(offeringId, selected);
 			onAdded(selected);
 			onClose();
 		} finally {

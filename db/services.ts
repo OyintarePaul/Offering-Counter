@@ -1,9 +1,9 @@
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "./client";
-import { services, categories } from "./schema";
+import { services, offerings } from "./schema";
 
 // Returns the id of the existing service with this date and label,
-// or creates it. A new service copies category names from the most recent
+// or creates it. A new service copies offering names from the most recent
 // service, with no counts.
 export async function findOrCreateService(
 	serviceDate: string,
@@ -25,12 +25,12 @@ export async function findOrCreateService(
 	const previous = await db.query.services.findFirst({
 		where: (s, { ne }) => ne(s.id, created.id),
 		orderBy: [desc(services.serviceDate), desc(services.createdAt)],
-		with: { categories: true },
+		with: { offerings: true },
 	});
 
-	if (previous && previous.categories.length > 0) {
-		await db.insert(categories).values(
-			previous.categories.map((c) => ({
+	if (previous && previous.offerings.length > 0) {
+		await db.insert(offerings).values(
+			previous.offerings.map((c) => ({
 				serviceId: created.id,
 				name: c.name,
 				position: c.position,
