@@ -5,7 +5,6 @@ import { router } from "expo-router";
 import { Plus } from "lucide-react-native";
 import { useState } from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -36,14 +35,10 @@ import { SERVICE_LABELS } from "@/lib/presets";
 import { routes } from "@/lib/routes";
 
 export function NewServiceDialog() {
-	const insets = useSafeAreaInsets();
 	const [open, setOpen] = useState(false);
 
 	return (
-		<View
-			style={{ paddingBottom: Math.max(insets.bottom, 20) }}
-			className="bg-background px-4 pt-3"
-		>
+		<View>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
 					<Button>

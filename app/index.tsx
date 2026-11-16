@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { useCallback } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlatList, View } from "react-native";
 import { CustomHeader } from "@/components/custom-header";
 import { EmptyServices } from "@/components/services/empty-services";
@@ -11,6 +12,7 @@ import {
 import { useServiceTree } from "@/db/live";
 
 export default function ServicesScreen() {
+    const insets = useSafeAreaInsets();
 	const { services: list, ready } = useServiceTree();
 
 	const renderItem = useCallback(
@@ -19,7 +21,10 @@ export default function ServicesScreen() {
 	);
 
 	return (
-		<View className="flex-1 bg-background">
+		<View
+            style={{ paddingBottom: Math.max(insets.bottom, 20) }}
+            className="flex-1 bg-background pt-3"
+        >
 			<Stack.Screen
 				options={{
 					header: () => (
@@ -33,11 +38,12 @@ export default function ServicesScreen() {
 				keyExtractor={(item) => String(item.id)}
 				renderItem={renderItem}
 				ListEmptyComponent={ready ? EmptyServices : undefined}
-				contentContainerClassName="gap-4 p-4 flex-grow"
+				contentContainerClassName="gap-4 px-4 flex-grow"
 				showsVerticalScrollIndicator={false}
 			/>
-
-			<NewServiceDialog />
+            <View className="absolute bottom-6 right-6">
+			     <NewServiceDialog />
+            </View>
 		</View>
 	);
 }
